@@ -1,0 +1,45 @@
+
+{% extends 'base.html.twig' %}
+   
+   {% block body %}
+<h1>Launchpad</h1>
+    
+      <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Date Modified</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for emailproject in emailprojects %}
+            <tr>
+                <td>{{ emailproject.id }}</td>
+                <td>{{ emailproject.title }}</td>
+                <td>{{ emailproject.date_modified }}</td>
+              <td><a href="{{ path('emailproject_show', { 'id': emailproject.id }) }}">View</a></td>
+              <td><a href="{{ path('emailproject_build', { 'id': emailproject.id }) }}">Edit</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    
+    
+    
+    
+    
+    <form action="{{ path('emailproject_add') }}" method="POST">
+    <label for="name">Project Name: </label>
+    <input type="text" name="name"><br>
+
+
+
+   <input type="submit" name="btnAdd" value="Create Email Project">
+    
+    </form>
+    
+
+      
+{% endblock %}      
+

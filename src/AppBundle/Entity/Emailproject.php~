@@ -1,0 +1,329 @@
+<?php 
+// src/AppBundle/Entity/Product.php
+namespace AppBundle\Entity;
+
+class Emailproject
+{
+  private $id;
+  private $username;
+  private $body;
+  private $email;
+  private $exacttarget_id;
+  private $title;
+  private $company;
+  private $source;
+  private $campaign;
+  private $medium;
+  private $term;
+  private $content;
+  private $date_modified;
+
+	public function __construct($body, $title)
+	{
+		$this->setBody($body);
+		$this->setTitle($title);
+
+    
+
+    
+	}
+	
+ 
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set username
+     *
+     * @param string $username
+     *
+     * @return Emailproject
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    /**
+     * Get username
+     *
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * Set body
+     *
+     * @param string $body
+     *
+     * @return Emailproject
+     */
+    public function setBody($body)
+    {
+        $this->body = $body;
+
+        return $this;
+    }
+
+    /**
+     * Get body
+     *
+     * @return string
+     */
+    public function getBody()
+    {
+        return $this->body;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     *
+     * @return Emailproject
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set exacttargetId
+     *
+     * @param integer $exacttargetId
+     *
+     * @return Emailproject
+     */
+    public function setExacttargetId($exacttargetId)
+    {
+        $this->exacttarget_id = $exacttargetId;
+
+        return $this;
+    }
+
+    /**
+     * Get exacttargetId
+     *
+     * @return integer
+     */
+    public function getExacttargetId()
+    {
+        return $this->exacttarget_id;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     *
+     * @return Emailproject
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set company
+     *
+     * @param string $company
+     *
+     * @return Emailproject
+     */
+    public function setCompany($company)
+    {
+        $this->company = $company;
+
+        return $this;
+    }
+
+    /**
+     * Get company
+     *
+     * @return string
+     */
+    public function getCompany()
+    {
+        return $this->company;
+    }
+
+    /**
+     * Set source
+     *
+     * @param string $source
+     *
+     * @return Emailproject
+     */
+    public function setSource($source)
+    {
+        $this->source = $source;
+
+        return $this;
+    }
+
+    /**
+     * Get source
+     *
+     * @return string
+     */
+    public function getSource()
+    {
+        return $this->source;
+    }
+
+    /**
+     * Set campaign
+     *
+     * @param string $campaign
+     *
+     * @return Emailproject
+     */
+    public function setCampaign($campaign)
+    {
+        $this->campaign = $campaign;
+
+        return $this;
+    }
+
+    /**
+     * Get campaign
+     *
+     * @return string
+     */
+    public function getCampaign()
+    {
+        return $this->campaign;
+    }
+
+    /**
+     * Set medium
+     *
+     * @param string $medium
+     *
+     * @return Emailproject
+     */
+    public function setMedium($medium)
+    {
+        $this->medium = $medium;
+
+        return $this;
+    }
+
+    /**
+     * Get medium
+     *
+     * @return string
+     */
+    public function getMedium()
+    {
+        return $this->medium;
+    }
+
+    /**
+     * Set term
+     *
+     * @param string $term
+     *
+     * @return Emailproject
+     */
+    public function setTerm($term)
+    {
+        $this->term = $term;
+
+        return $this;
+    }
+
+    /**
+     * Get term
+     *
+     * @return string
+     */
+    public function getTerm()
+    {
+        return $this->term;
+    }
+
+    /**
+     * Set content
+     *
+     * @param string $content
+     *
+     * @return Emailproject
+     */
+    public function setContent($content)
+    {
+        $this->content = $content;
+
+        return $this;
+    }
+
+    /**
+     * Get content
+     *
+     * @return string
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    /**
+     * Set dateModified
+     *
+     * @param \DateTime $dateModified
+     *
+     * @return Emailproject
+     */
+    public function setDateModified($dateModified)
+    {
+        $this->date_modified = $dateModified;
+
+        return $this;
+    }
+
+    /**
+     * Get dateModified
+     *
+     * @return \DateTime
+     */
+    public function getDateModified()
+    {
+        return $this->date_modified;
+    }
+}
