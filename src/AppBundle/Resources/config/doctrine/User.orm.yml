@@ -28,5 +28,7 @@ AppBundle\Entity\User:
         company:
             type: string
             length: 60
+        last_login:
+            type: datetime
     lifecycleCallbacks: {  }
 
