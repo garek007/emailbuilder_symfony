@@ -57,8 +57,8 @@
                     <tr>
                       <td width="50%" valign="top" align="left" style="padding-right: 5px; padding-top: 20px; padding-bottom: 20px; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #dddddd;" class="blockme left">
                       
-                      
-                      {{ include('signatures.rare.html') }}
+                    
+                      {{ include('company/sdta/templates/signatures.rare.html') }}
   
   
 </td>
@@ -84,5 +84,5 @@
   </tbody>
 </table>
 
-{{ include('controls.html', {controls:'signatures',colors:false}) }}
+{{ include('company/sdta/_controls.html', {controls:'signatures',colors:false}) }}
 {% endblock %}

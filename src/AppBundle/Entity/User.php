@@ -23,6 +23,7 @@ class User implements UserInterface, \Serializable
     private $isActive;
     private $name;
     private $company;
+    private $last_login;
 
     public function __construct()
     {
@@ -121,6 +122,14 @@ class User implements UserInterface, \Serializable
         return $this->email;
     }
 
+    public function setLast_Login($lastLogin){
+      $this->last_login = $lastLogin;
+      return $this;
+    }
+    public function getLast_Login(){
+      return $this->last_login;
+      
+    }
     public function setIsActive($isActive)
     {
         $this->is_active = $isActive;

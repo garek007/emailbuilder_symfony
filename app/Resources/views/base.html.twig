@@ -49,24 +49,26 @@
 </div>
      
         
-        
-        
-        
-        
-        
-        
-        
-        
+
     
  
         {% block body %}{% endblock %}
         
+
+
         
+        {# Need to use twig query here to find logged in company and load their scripts#}
         
-        
-        
-        
-        
+        </div><!-- End Page Wrap -->
+        <footer>
+        <div class="row">
+        <div class="cols_12-4">
+        <span style="display:block;margin-bottom:3px;color:#fff;">Built with</span>
+        <img src="/images/symfony_logo.png" alt="Symfony"><br>
+       <span style="display:block;margin-bottom:3px;color:#fff;">{{ constant('Symfony\\Component\\HttpKernel\\Kernel::VERSION') }}</span>
+        </div>
+        </div>
+        </footer>
         
         
         
@@ -81,17 +83,7 @@
         {% endjavascripts %}        
         {% block javascripts %}{% endblock %}
         
-        {# Need to use twig query here to find logged in company and load their scripts#}
         
-        </div><!-- End Page Wrap -->
-        <footer>
-        <div class="row">
-        <div class="cols_12-4">
-        <span style="display:block;margin-bottom:3px;color:#fff;">Built with</span>
-        <img src="/images/symfony_logo.png" alt="Symfony"><br>
-       <span style="display:block;margin-bottom:3px;color:#fff;">{{ constant('Symfony\\Component\\HttpKernel\\Kernel::VERSION') }}</span>
-        </div>
-        </div>
-        </footer>
+        
     </body>
 </html>
