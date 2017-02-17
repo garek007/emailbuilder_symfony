@@ -131,21 +131,21 @@ class EmailprojectController extends Controller
         case "sdta-custom-insertSignature":
           $name=$options['name'];
 
-          if($options['oddEven']=="true"){			
-            echo $twig->render($company.'/templates/signatures.'.$name.'.html');
+          if($options['oddEven']=="true"){	
+            return $this->render('company/'.$company.'/templates/signatures.'.$name.'.html');
+            
           }else{
-            echo $twig->render($company.'/templates/signatures.row.html', array('name' => $name));
+            return $this->render('company/'.$company.'/templates/signatures.row.html',
+              array('name' => $name)                 
+            );
+            
           }
           break;
 
         case "dropModule":
           $module = $options['module'];
-          //an idea, I'll delete when I'm good and ready
-          //$controls = json_decode(file_get_contents('company/'.$company.'/_controls.json'), true);
-          //echo $controls['controls']['toggle_sponsored'][0];
-
           return $this->render('company/'.$company.'/templates/'.$module.'.lyt.php', 
-          array('module' => $module)         
+            array('module' => $module)         
           ); 
           break;
         case "saveProject":
@@ -153,16 +153,12 @@ class EmailprojectController extends Controller
           $projectID = $options['projectNum'];
           $em = $this->getDoctrine()->getEntityManager();
 
-
           $repo = $this->getDoctrine()->getRepository('AppBundle:Emailproject');
           $emailproject = $em->getRepository('AppBundle:Emailproject')->find($projectID);
           $emailproject->setBody($html);
-
           $em->flush($emailproject);
 
-
           return new Response();
-
 
           break;
         default:break;	
@@ -200,45 +196,17 @@ class EmailprojectController extends Controller
     public function deleteMultipleAction(Request $request)
     {  
       $inputs = $request->get('delete');
-      //var_dump($inputs);
       $em = $this->getDoctrine()->getManager();
-      //$repo = $this->getDoctrine()->getRepository('AppBundle:Emailproject');
+      
       foreach($inputs as $projectID){
         $emailproject = $em->getRepository('AppBundle:Emailproject')->find($projectID);
         $em->remove($emailproject);
         $em->flush($emailproject);        
         
-        
-        
-        
       }
-      
-                      
-        //$emailprojects = $em->getRepository('AppBundle:Emailproject')->findAll();
-           //$emailproject = $em->find('AppBundle:Emailproject',1);
-           //$emailproject = $this->getDoctrine()->getRepository('AppBundle:Emailproject')->find($projectID);
-           
-           
-           
-       
-      
-      
-      
-        //if ($form->isSubmitted() && $form->isValid()) {
-           // $em = $this->getDoctrine()->getManager();
-            //$em->remove($emailproject);
-            //$em->flush($emailproject);
-       // }
 
         return $this->redirectToRoute('emailproject_index');      
-      
-      
-      
- // $deleteprojects = $_POST['delete'];
-	//foreach($deleteprojects as $projid){
-		//echo $projid;
-		//$query = "DELETE FROM projects WHERE Project_Number='$projid'";
-		//$results = mysqli_query($con,$query);	
+ 
   }
     
   

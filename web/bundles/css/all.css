@@ -163,9 +163,6 @@ small,
   margin: 0 auto;
   background: #fff; }
 
-.empty {
-  background: transparent; }
-
 .activated {
   border: 2px dotted red;
   background: #cfffd4; }
@@ -381,10 +378,11 @@ small,
 .unedited {
   color: #f00; }
 
-.empty {
+span.empty {
   display: block;
   text-align: center;
-  padding: 50px; }
+  padding: 50px;
+  background: transparent; }
 
 .fullhtml {
   display: block; }
@@ -422,7 +420,6 @@ small,
   float: left;
   margin: 0 20px 0 0; }
 
-/* tables */
 table {
   border-spacing: 1px 1px;
   border-collapse: separate; }

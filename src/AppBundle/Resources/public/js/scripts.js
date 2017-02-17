@@ -96,68 +96,28 @@ var $url = "index.php";
 	$('body').on('change', '#addSignature input', function(e) {
 		//var $name = e.target.name;
 		var $dad = $(this).closest(".contentarea_container");
+    var $name = e.target.name;
 		if($(this).is(":checked")){		
 		 // var $sigPath = path+"signatures."+$name+".html";
 		  
 		  var $numSigs = $dad.find('.signature').length;
-		  //var isOdd = ($numSigs % 2) == 1;	
-			
-			
+		  var $isOdd = ($numSigs % 2) == 1;
 			var propsObject = {
 				flag:"sdta-custom-insertSignature",
-				oddEven:($numSigs % 2) == 1,
-				name:e.target.name
+				oddEven:$isOdd,
+				name:$name
 			};
-				
-			//makeAjaxCall(propsObject,updateEventCal);
 			makeAjaxCall(propsObject,function(data){
-				if(isOdd){
+				if($isOdd){
 					$dad.find('.eventcal tr:last-child .blockme:last-child').html(data);
 				}else{
 					$dad.find('.eventcal >tbody').append(data);	}			
 			});
-		/*	
-		  $.ajax({
-				type: "POST",
-				dataType: "text",
-				url: $url,
-				data: {
-					oddEven: isOdd,
-					name:$name,
-					isAjax: true
-				}
-			}).done(function (data) {
-				if(isOdd){
-					$dad.find('.eventcal tr:last-child .blockme:last-child').html(data);
-				}else{
-					$dad.find('.eventcal >tbody').append(data);
-				}
-			});
-		  
-		  //code before was commented out until just now 1-13-2017 4:10pm
-		  	
-		  if (isOdd) {
-			  $.get($sigPath, function(data) {
-					  $dad.find('.eventcal tr:last-child .blockme:last-child').html(data);
-			  })
-		  } else {
-			  $.get(path+"signatures.row.html", function(data) {
-				  $dad.find('.eventcal >tbody').append(data);
-				  $.get($sigPath, function(data) {
-						  $dad.find('.eventcal tr:last-child .blockme:first-child').html(data);
-				  });					
-					  
-			  })
-		  }	
-		  */	
 		}else{
+      console.log($dad);
+      console.log($name);
 				$dad.find("."+$name).remove();
-		}
-
-		
-		
-		//var $nextEmpty = $(this).closest("contentarea_container").find(".empty");
-		
+		}		
 	});
 var folderID;		
 	$("#template").change(function(e){
