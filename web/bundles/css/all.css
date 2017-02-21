@@ -702,6 +702,15 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 .contentarea_container {
   position: relative; }
 
+.fontSize {
+  color: #000;
+  position: absolute;
+  left: -10px;
+  font-size: 18px !important; }
+
+.fontSize.fa-minus {
+  left: -35px; }
+
 .croppie-container {
   padding: 30px; }
 
@@ -868,7 +877,7 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 .cr-rotate-r i:before {
   content: 'Γå╗'; }
 
-.button, input[type=submit] {
+input.button, input[type=submit] {
   padding: 10px 25px;
   background: #ddd;
   border-radius: 6px;

@@ -275,4 +275,17 @@ var folderID;
         var $dad = $(this).closest(".contentarea_container");
         var $last = $dad.find('.list-item').last().remove();
     });
+    $("body").on("click", ".fontSize", function(event) {
+        var $me = $(this);
+        $currentFontSize = $me.closest("td").css("font-size");
+        $currentFontSize = Number($currentFontSize.replace("px",""))
+      console.log($currentFontSize);
+        if($me.hasClass("fa-plus")){
+         $currentFontSize++;
+        }else{
+         $currentFontSize--;
+        }
+      $me.closest("td").css("font-size",$currentFontSize+"px");
+    });  
+    
 })(jQuery);

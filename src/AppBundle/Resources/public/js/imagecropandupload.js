@@ -60,7 +60,7 @@
 
 						$('.fa-spinner').fadeIn();
 						$.ajax({
-								url: "/processUploads2.php",
+								url: "http://www.mylittleemailbuilder.com/processUploads2.php",
 								type: "POST",
 								data: {
 										'file': resp,
@@ -80,6 +80,7 @@
 										}
 
 										$target.removeClass('activeImage');
+                   $(".activated").removeClass("activated");
 										$uploadCrop.croppie('destroy');
 										$('.fa-spinner').fadeOut();
 								});

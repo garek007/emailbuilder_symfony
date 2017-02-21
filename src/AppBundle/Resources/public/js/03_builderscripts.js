@@ -293,9 +293,12 @@ $(document).ready(function() {
   //$('#saveproject').click(function() {   //used to have save functions here, merged with above });
 	
 //Module control functions start
-    $('body').on('click', '.remove', function(e) {
+    $("body").on("click", ".remove", function(e) {
         e.preventDefault();
-        $(this).closest('.contentarea_container').remove();
+        $(this).closest(".contentarea_container").remove();
+        if($("#container").find(".contentarea_container").length < 1){
+          $("#container").html("<span class=\"empty\"></span>");
+        }
     });
 
     $('body').on('click', '.drag', function(e) {

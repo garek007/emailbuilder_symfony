@@ -67,12 +67,13 @@
 														</tr>
 														<tr>
 															<td class="title" align="left" style="font-size: 29px; line-height: 34px; padding-bottom: 5px; letter-spacing: 0.3px;"><a class="headline dest_url" href="#" style="color: #434448; text-decoration: none;">
-															
+															{{ include('company/sdta/_controls.html', {controls:'fontsize',colors:false}) }}
 		
 															<font style="font-family: 'Arial Narrow', Helvetica, sans-serif;"> 
 									<!--[if (!mso 14)&(!mso 15)]><!--> 
 									<font style="font-family: Oswald, 'Arial Narrow', Helvetica, Arial, sans-serif;"> 
 									<!--<![endif]--> 
+									
 									<span class="editable unedited">MAIN TITLE OR HEADLINE</span>
 									     <!--[if (!mso 14)&(!mso 15)]><!--> 
 									</font> 

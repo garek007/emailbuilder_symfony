@@ -1,4 +1,5 @@
-<div class="module_controls">
+{% if controls != "fontsize" %}
+  <div class="module_controls">
 		<i class="fa fa-times remove" aria-hidden="true"></i>
 		<i class="fa fa-ellipsis-v drag" aria-hidden="true" title="order"></i>
 		<i class="fa fa-files-o duplicate" aria-hidden="true" title="duplicate"></i>
@@ -53,3 +54,8 @@
 			<div class="white" title="change background to white"></div>	
 		{% endif %}
 		</div>
+		
+	{% else%}
+		  <i class="fa fa-plus fontSize" aria-hidden="true" title="Increase font size"></i>
+      <i class="fa fa-minus fontSize" aria-hidden="true" title="Decrease font size"></i>
+		{% endif %}

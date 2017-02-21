@@ -239,3 +239,12 @@
 .contentarea_container {
 	position: relative;
 }
+.fontSize{
+  color:#000;
+  position:absolute;
+  left:-10px;
+  font-size:18px !important;
+}
+.fontSize.fa-minus{
+  left:-35px;
+}
