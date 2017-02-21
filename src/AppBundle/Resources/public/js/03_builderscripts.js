@@ -482,54 +482,23 @@ $(document).ready(function() {
 						var $me = $(this);
             //var $type = $me.data('linktype');
 						var $newValue = $me.val();
-						var $updateMe = $(".active_editing");
-						$updateMe.attr("src",$newValue);
+
 					
-					
-					/*
-						switch($type){
-							case "onecol":
-								$me.closest(".contentarea_container").find(".editableImage").attr("src",$newValue);
-								break;							
-							case "twocol-left":
-								$me.closest(".contentarea_container").find(".editableImage.left").attr("src",$newValue);
-								console.log("wtf left");
-								break;
-							case "twocol-right":
-								$me.closest(".contentarea_container").find(".editableImage.right").attr("src",$newValue);
-								console.log("wtf-right");
-								break;
-							case "fourcol":
-								var $pos = $me.data("position");
-								$me.closest(".contentarea_container").find(".editableImage."+$pos).attr("src",$newValue);
-							case "img-input":
-							case "link-input":
-							default:break;
-						}*/
-           
+	         
 
             if ($me.hasClass('link-input')) {
 
-                //decided to only tag if a campaign is selected	we don't rely enough on tagging to make 
-                //it important to tag every email and it would overcomplicate this app
-                var $template = $('#template').val();
 
-                if ($template == "tttd") {
-                    $newValue = tagForGA($newValue, $template);
-                } else if ($template == "monthly") {
-
-                }
                 $me.closest('.blockme, .numbered-list-item, .pasted').find('a').attr('href', $newValue);
                 $('.linking').addClass('linked').removeClass('linking');
                 $me.remove();
 
             } else if ($me.hasClass('img-input')) {
-               // $me.closest('.blockme').find('.editableImage').attr('src', $newValue);
+              var $updateMe = $(".active_editing");
+              $updateMe.attr("src",$newValue);
+              $updateMe.removeClass("active_editing");
                 $me.remove();
-						} else if ($(this).hasClass('img-input2')) {
-                $me.closest('.imagecont').find('.editableImage').attr('src', $newValue);
-                $me.remove();							
-            } else {
+						} else {
                 if ($me.find('span').is('.maintitle, .date, .eventname, .dates, .section_title, .dates2')) {
                     $newValue = $newValue.toUpperCase();
                 }
@@ -540,16 +509,9 @@ $(document).ready(function() {
         }
 
     });
-//Text edition functions end
+//Text editor functions end
 
   
-
-	
-	
-	
-	
-	
-
 
 
 		$('body').delegate('.eventDatepicker', 'click', function(event) {
