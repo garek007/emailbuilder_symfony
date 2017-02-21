@@ -74,14 +74,11 @@
         
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
         <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>  
-        
-
-        
-        
-        {% javascripts '@AppBundle/Resources/public/js/*' %}
-          <script src="{{ asset_url }}"></script>
-        {% endjavascripts %}        
-        {% block javascripts %}{% endblock %}
+        <script src="/bundles/app/js/01_croppie.js"></script>
+        <script src="/bundles/app/js/02_jquery.tablesorter.min.js"></script>
+        <script src="/bundles/app/js/03_builderscripts.js"></script>
+        <script src="/bundles/app/js/imagecropandupload.js"></script>
+        <script src="/bundles/app/js/scripts.js"></script>
         
         
         
