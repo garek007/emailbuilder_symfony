@@ -8,6 +8,8 @@ use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Response;
 
+use AppBundle\Uploader;
+
 //use Symfony\Component\Finder\Finder;
 
 
@@ -27,6 +29,8 @@ class EmailprojectController extends Controller
         $loggedInUser = $this->getUser();
         $username = $loggedInUser->getUsername();
         
+        //$uploader = $this->get('app.uploader');
+        //return $uploader->add(2,3);
         //$emailprojects = $em->getRepository('AppBundle:Emailproject')->findAll();
         $emailprojects = $em->getRepository('AppBundle:Emailproject')->loadUserProjects($username);
 

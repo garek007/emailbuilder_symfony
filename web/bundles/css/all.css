@@ -163,10 +163,6 @@ small,
   margin: 0 auto;
   background: #fff; }
 
-.activated {
-  border: 2px dotted red;
-  background: #cfffd4; }
-
 .container p {
   margin: 0; }
 
@@ -403,7 +399,19 @@ span.empty {
   text-align: center;
   color: red;
   font-weight: 700;
-  display: none; }
+  display: none;
+  z-index: 1000; }
+
+.dropzone {
+  height: 5px;
+  background: #cfffd4; }
+
+.dropzone.activated {
+  height: 30px; }
+
+.activated {
+  border: 1px dotted red;
+  background: #b0ffb8; }
 
 /*SDTA SPECIFIC*/
 .blockme {
@@ -419,6 +427,24 @@ span.empty {
   display: block;
   float: left;
   margin: 0 20px 0 0; }
+
+.project_options {
+  position: fixed;
+  padding: 10px 0px;
+  background: #777;
+  transition: 1s;
+  border-right: 1px solid #333;
+  border-bottom: 1px solid #ddd;
+  border-top: 1px solid #ddd; }
+
+.project_options:hover {
+  padding-left: 20px;
+  transition: .5s; }
+
+.project_options .fa {
+  display: block;
+  padding: 10px;
+  margin: 0; }
 
 table {
   border-spacing: 1px 1px;
@@ -877,7 +903,7 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 .cr-rotate-r i:before {
   content: 'Γå╗'; }
 
-input.button, input[type=submit] {
+.input.button, input.button, input[type=submit] {
   padding: 10px 25px;
   background: #ddd;
   border-radius: 6px;
@@ -892,7 +918,7 @@ input.button, input[type=submit] {
   color: #000;
   border: 1px solid #ddd; }
 
-.button:hover, input[type=submit]:hover {
+.input.button:hover, input.button:hover, input[type=submit]:hover {
   color: #0fa0ce;
   color: #a1e8ff;
   background: linear-gradient(180deg, #0061a7 5%, #007dc1); }

@@ -1,4 +1,4 @@
-input.button, input[type=submit]{
+.input.button, input.button, input[type=submit]{
 	padding:10px 25px;
 	background:#ddd;
 	border-radius:6px;
@@ -15,7 +15,7 @@ input.button, input[type=submit]{
 	color:#000;
 	border:1px solid #ddd;
 }
-.button:hover, input[type=submit]:hover {
+.input.button:hover, input.button:hover, input[type=submit]:hover {
 	color: #0fa0ce;
   
   color:$veryLightBlue;

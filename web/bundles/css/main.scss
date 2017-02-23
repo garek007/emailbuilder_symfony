@@ -196,10 +196,7 @@ small,
 	background: #fff;
 }
 
-.activated {
-	border: 2px dotted red;
-	background:#cfffd4;
-}
+
 .container p {
 	margin: 0;
 }
@@ -461,8 +458,19 @@ span.empty {
   color:red;
   font-weight:$bold;
   display:none;
+  z-index: 1000;
 }
-
+.dropzone{
+  height:5px;
+  background:#cfffd4;
+}
+.dropzone.activated{
+  height:30px;
+}
+.activated {
+	border: 1px dotted red;
+	background:#b0ffb8;
+}
 /*SDTA SPECIFIC*/
 .blockme {
 	position: relative;
@@ -477,4 +485,22 @@ span.empty {
 	display: block;
 	float: left;
 	margin: 0 20px 0 0;
+}
+.project_options{
+  position:fixed;
+  padding:10px 0px;
+  background:#777;
+  transition: 1s;
+  border-right:1px solid #333;
+  border-bottom:1px solid #ddd;
+  border-top:1px solid #ddd;
+}  
+.project_options:hover{
+  padding-left:20px;
+  transition: .5s;
+}
+.project_options .fa{
+  display:block;
+  padding:10px;
+  margin:0;
 }

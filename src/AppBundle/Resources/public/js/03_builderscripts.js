@@ -85,6 +85,7 @@ function doDraggable() {
     $(".fullhtml").draggable({
     	revert: function (event, ui) {
     		$('.draggedFrom').removeClass('draggedFrom');
+        $(".dropzone").remove();
     		return true;
     	},
     	start: function (event, ui) {
@@ -93,8 +94,8 @@ function doDraggable() {
 
 					var $contentblock = $(".contentarea_container");
 					$.each($contentblock, function(){
-						$(this).after('<div class="dropzone" style="height:20px;"></div>');
-						$(this).before('<div class="dropzone" style="height:20px;"></div>');
+						$(this).after('<div class="dropzone"></div>');
+						//$(this).before('<div class="dropzone" style="height:20px;"></div>');
 					});
 
     		$('.empty, .dropzone').droppable({
@@ -102,7 +103,7 @@ function doDraggable() {
           tolerance: "touch",
     			drop: function (event, ui) {
 						
-						$(this).addClass("droppedHere");
+						$(this).addClass("droppedHere").removeClass("dropzone");
 						
 						var propsObject = {
 							flag:"dropModule",
@@ -349,23 +350,7 @@ $(document).ready(function() {
 		 closeLoader();
 	 });		
 
-		//next function pops up box where you input img or href link
-    $('body').on('click', '.fa-external-link, .link', function(e) {
-			e.preventDefault();			
-			var $me = $(this);
-			
-			if($me.hasClass("link")){	
-				var $link = $(this).closest("a").attr("href");
-				var $type = $me.data('linktype');
-				$(this).removeClass('linked');
-				$(this).closest('.blockme, .first_buffer_row, .pasted, .linkinput').prepend('<input autofocus class="editing link-input"/>');
-				$('.editing').val($link).focus();
-				$(this).addClass('linking');	
-			}else{
-				$me.addClass("active_editing");
-				$me.closest(".blockme").prepend('<input autofocus class="editing img-input"/>');				
-			}
-    });
+
 	
 	 $('body').on('click', '.events-build', function(event) {
 		 doAJAX.loadEventBuildForm("events-build.php");
@@ -477,7 +462,25 @@ $(document).ready(function() {
         event.preventDefault();
     });
 		
-	
+			//next function pops up box where you input img or href link
+    $('body').on('click', '.fa-external-link, .link', function(e) {
+			e.preventDefault();			
+			var $me = $(this);
+			
+			if($me.hasClass("link")){	
+				var $link = $(this).closest("a").attr("href");
+				var $type = $me.data("linktype");
+        var $pos = $me.data("position");
+				$(this).removeClass('linked');
+				$(this).closest('.blockme, .first_buffer_row, .pasted, .linkinput').prepend('<input autofocus class="editing link-input" data-position="'+$pos+'"/>');
+				$('.editing').val($link).focus();
+				$(this).addClass('linking');	
+			}else{
+				$me.addClass("active_editing");
+				$me.closest(".blockme").prepend('<input autofocus class="editing img-input"/>');				
+			}
+    });
+  
     $('body').on('keydown', '.editing', function(e) {
 
 
@@ -490,11 +493,15 @@ $(document).ready(function() {
 	         
 
             if ($me.hasClass('link-input')) {
-
-
-                $me.closest('.blockme, .numbered-list-item, .pasted').find('a').attr('href', $newValue);
-                $('.linking').addClass('linked').removeClass('linking');
-                $me.remove();
+              var $pos = $($me).data("position");
+              
+              if($pos != "undefined"){
+                $me.closest('.blockme, .numbered-list-item, .pasted').find("."+$pos + " a").attr('href', $newValue);
+              }else{  
+                $me.closest('.blockme, .numbered-list-item, .pasted').find('a').attr('href', $newValue);  
+              }
+              $('.linking').addClass('linked').removeClass('linking');
+              $me.remove();
 
             } else if ($me.hasClass('img-input')) {
               var $updateMe = $(".active_editing");

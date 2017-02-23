@@ -44,7 +44,7 @@
 								<tr>
 									<td class="blockme imagecont droppable" style="padding-right: 5px;" width="50%" valign="top" align="left">
                   <div class="draggable">            
-                  <img class="fullwidth drop-area editableImage cloudinary" data-width="265" data-height="210" src="http://image.updates.sandiego.org/lib/fe9e15707566017871/m/4/placeholderimage_265x210.gif" border="0" style="display: block; height: auto !important;" width="265" />
+                  <img class="fullwidth drop-area editableImage cloudinary fa-external-link" data-width="265" data-height="210" src="http://image.updates.sandiego.org/lib/fe9e15707566017871/m/4/placeholderimage_265x210.gif" border="0" style="display: block; height: auto !important;" width="265" />
                   </div>
                   
                   </td>

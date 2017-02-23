@@ -75,7 +75,7 @@
       <div style="width:600px;margin:0 auto;">
           {% if emailproject.body is empty %}
           <p>No HTML yet. Get to work!
-         <a class="button" href="{{ path('emailproject_build', { 'id': emailproject.id }) }}">Start Building</a>
+         <a class="input button" href="{{ path('emailproject_build', { 'id': emailproject.id }) }}">Start Building</a>
          </p>
           {% else %}
            {{ emailproject.body|raw }}
