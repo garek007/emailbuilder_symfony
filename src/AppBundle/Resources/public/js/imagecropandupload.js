@@ -122,7 +122,7 @@
 			range: "min",
 			orientation: "vertical",
 			min: 0,
-			max: 250,
+			max: 450,
 			step: 5,
 			slide: function(event, ui) {
 					//$( "#amount" ).val( ui.value );

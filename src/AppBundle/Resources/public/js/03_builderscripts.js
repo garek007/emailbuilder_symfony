@@ -444,20 +444,43 @@ $(document).ready(function() {
 	
 //Text edition functions start
     $('body').on('click', '.editable', function(event) {
-
         event.preventDefault();
-        var $content = $(this).text();
+        var $me = $(this);
+      
+        var $fontsize = $me.closest(".dest_url, .description").css("font-size");
+              
+        var $content = $me.text();
 
-        if (!$(this).hasClass('editing')) {
-            if ($(this).hasClass('textarea')) {
-                $(this).wrap('<textarea autofocus class="editing"/>');
+        if (!$me.hasClass("editing")) {
+            if ($me.hasClass('textarea')) {
+                $me.wrap("<textarea autofocus class=\"editing\" style=\"font-size:"+$fontsize+"\"/>");
 
             } else {
-                $(this).wrap('<input autofocus class="editing"/>');
+                $me.wrap("<input autofocus class=\"editing\" style=\"font-size:"+$fontsize+"\"/>");
             }
-            $(this).closest(".editing").val($content);
+            $me.closest(".editing").val($content);
+            $(".editing").before('\
+                <div class="fontSize display"></div>\
+                <i class="fa fa-plus fontSize" aria-hidden="true" title="Increase font size"></i>\
+                <i class="fa fa-minus fontSize" aria-hidden="true" title="Decrease font size"></i>');
+          
         }
     });
+  
+    $("body").on("click", ".fontSize", function(event) {
+        var $me = $(this);
+        $currentFontSize = $me.closest("a, td").css("font-size");
+        $currentFontSize = Number($currentFontSize.replace("px",""))
+      console.log($currentFontSize);
+        if($me.hasClass("fa-plus")){
+         $currentFontSize++;
+        }else{
+         $currentFontSize--;
+        }
+      $me.closest("a, td").css("font-size",$currentFontSize+"px");
+      $(".editing").css("font-size",$currentFontSize+"px");
+      $(".fontSize.display").text($currentFontSize+"px");
+    });  
     $('body').on('click', '.editing', function(event) {
         event.preventDefault();
     });
@@ -486,6 +509,7 @@ $(document).ready(function() {
 
         if (e.which == 9) { //9 is tab key, 13 is enter key
 						var $me = $(this);
+          $(".fontSize").remove();
             //var $type = $me.data('linktype');
 						var $newValue = $me.val();
 
@@ -515,6 +539,7 @@ $(document).ready(function() {
                 $me.find('span').removeClass('unedited').html($newValue.replace(/(?:\r\n|\r|\n)/g, '<br />')).unwrap();
                 return false;
             }
+          
 
         }
 

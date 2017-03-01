@@ -415,9 +415,7 @@ small,
 	/* top:-10px; */
 	/* left:-10px; */
 	/* border:10px solid black; */
-	-webkit-box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.58);
-	-moz-box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.58);
-	box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.58);
+
 	z-index: 1000;
 }
 .drop-area {
@@ -503,4 +501,10 @@ span.empty {
   display:block;
   padding:10px;
   margin:0;
+}
+.fontSize.display{
+  position:absolute;
+  top:100px;
+  left:-50px;
+  font-size:20px;
 }

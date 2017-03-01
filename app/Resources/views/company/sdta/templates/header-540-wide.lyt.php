@@ -19,7 +19,9 @@
 							<tbody>
 								<tr>
 									<td>
+									
 									<a class="dest_url" style="font-size: 29px; color: #434448; line-height: 32px; text-decoration: none;" href="#">
+									
 									<font style="font-family: 'Arial Narrow', Helvetica, sans-serif;"> 
 									<!--[if (!mso 14)&(!mso 15)]><!--> 
 									<font style="font-family: Oswald, 'Arial Narrow', Helvetica, Arial, sans-serif;"> 
