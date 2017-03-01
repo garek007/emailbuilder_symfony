@@ -468,6 +468,7 @@ $(document).ready(function() {
     });
   
     $("body").on("click", ".fontSize", function(event) {
+      event.preventDefault();
         var $me = $(this);
         $currentFontSize = $me.closest("a, td").css("font-size");
         $currentFontSize = Number($currentFontSize.replace("px",""))
