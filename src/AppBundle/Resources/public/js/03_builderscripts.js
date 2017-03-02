@@ -49,6 +49,16 @@ function makeAjaxCall(options,callback){
 	
 	
 }
+function codePop(code,addButton){
+  var $button = '';
+  if(addButton==true){
+    var $button = '<button class="savecode">Save Code Changes</button>';
+  }
+  $('#loadContent').html('<textarea id="rawhtml" cols="130" rows="30" style="font-family:monospace">' + code + '</textarea>'+$button);
+  $('.ui-dialog').addClass('grabcode');
+  $('#load').dialog('open');
+}
+
 
 insertDroppedModule=function(html,module){
 	if($(".empty")[0]){
@@ -221,23 +231,35 @@ $(document).ready(function() {
         $('#container').html("<span class=\"empty\"></span>");
         }
     });	
-    $('body').on('click', '.grabcode .ui-icon-closethick', function() {
+    $('body').on('click', '.grabcode .ui-icon-closethick, .savecode', function() {
         $('.wrapped').removeClass("wrapped").find('.contentarea').unwrap();
         $('.ui-dialog').removeClass('grabcode');
     });			
 	
+	
+  
 
 	
-    $("body").on("click","#grabTheCode, .fa-clipboard, #syncToET, #saveProject",function() {
+	 $('body').on('click', '.savecode', function(event) {
+		 var $newCode = $("#rawhtml").val();
+     $(".replaceMe").replaceWith($newCode);
+		 closeLoader();
+	 });	
+  
+  
+    $("body").on("click","#grabAllCode, .grab-module-code, .edit-module-code, #syncToET, #saveProject",function() {
 			if($("#container").find(".unedited").length){
-				alert("Whoa, it looks like you have some unfilled content areas");
-				return;
+        if(!window.confirm("Whoa, it looks like you have some unfilled content areas")){
+          return;
+        }        
 			}
 
 			var theCode = '';
 			var id = $(this).attr("id");
+      var action = $(this).data("action");
+      console.log(action);
 			
-			switch(id){
+			switch(action){
 				case "syncToET":
 					$('.contentarea_container').each(function() {
             theCode += $(this).find('.contentarea').wrap('<p/>').parent().html();
@@ -253,14 +275,11 @@ $(document).ready(function() {
 						return;
 					});
 					break;
-				case "grabTheCode":	
+				case "grabAllCode":	
 					$('.contentarea_container').each(function() {
 							$(this).addClass("wrapped");
 							theCode += $(this).find('.contentarea').wrap('<p/>').parent().html();
-					});			
-          $('#loadContent').html('<textarea id="rawhtml" cols="130" rows="30" style="font-family:monospace">' + theCode + '</textarea>');
-          $('.ui-dialog').addClass('grabcode');
-          $('#load').dialog('open');	          
+					});				          
 					break;
 				case "saveProject":	
 					var saveObject = {
@@ -272,22 +291,28 @@ $(document).ready(function() {
 						utm_source: $('#utm_source').val(),
 						utm_campaign: $('#utm_campaign').val(),
 						utm_medium: $('#utm_medium').val()
-					};					
-					/*	if (template == "<select tagging template>") {
-											template = "none";
-									}		*/						
+					};										
 					makeAjaxCall(saveObject,function(data){
-						
             $('.filled').each().unwrap();
             $(".saved").fadeIn().delay(3000).fadeOut();
-						
 					});					
           break;
 				default:
 					$(this).closest(".contentarea_container").addClass("wrapped");
-					theCode = $(this).closest(".contentarea_container").find('.contentarea').wrap('<p/>').parent().html();		
+					theCode = $(this).closest(".contentarea_container").find('.contentarea').wrap('<p/>').parent().html();          
 					break;
 			}
+      if(action=="grabModuleCode" || action == "grabAllCode"){
+        codePop(theCode,false);	
+      }else if(action=="editModuleCode"){
+        $(".wrapped").find(".contentarea").addClass("replaceMe");
+        codePop(theCode,true);
+      }
+      
+    
+          
+          
+          
 	
 
     });	
@@ -333,22 +358,7 @@ $(document).ready(function() {
 			$(".duplicated").unwrap().removeClass("duplicated");
 		});	
 	
-	 $('body').on('click', '.editcode', function(event) {
-		 var $dad = $(this).closest(".contentarea_container");
-		 $dad.addClass("active_editing");
-		 var $theCode = $dad.html();
-		 $('#loadContent').html(
-			 '<textarea id="rawhtml" style="font-family:monospace">' 
-			 + $theCode + 
-			 '</textarea><button class="savecode">Save Code Changes</button>');
-		 $('#load').dialog('open');
-	 });
 	
-	 $('body').on('click', '.savecode', function(event) {
-		 var $newCode = $("#rawhtml").val();
-		 $(".active_editing").html($newCode);
-		 closeLoader();
-	 });		
 
 
 	

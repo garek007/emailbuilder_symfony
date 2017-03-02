@@ -1,10 +1,10 @@
-{% if controls != "fontsize" %}
+
   <div class="module_controls">
 		<i class="fa fa-times remove" aria-hidden="true"></i>
 		<i class="fa fa-ellipsis-v drag" aria-hidden="true" title="order"></i>
 		<i class="fa fa-files-o duplicate" aria-hidden="true" title="duplicate"></i>
-		<i class="fa fa-clipboard" aria-hidden="true" title="copy to clipboard"></i>
-		<i class="fa fa-pencil-square-o editcode" aria-hidden="true" title="edit the code"></i>
+		<i class="fa fa-clipboard grab-module-code" aria-hidden="true" title="copy to clipboard" data-action="grabModuleCode"></i>
+		<i class="fa fa-pencil-square-o edit-module-code" aria-hidden="true" title="edit the code" data-action="editModuleCode"></i>
 		{% if controls == "headline" %}
 			<i class="fa fa-usd toggle_sponsored" aria-hidden="true"></i>
 		{% endif %}
@@ -55,7 +55,3 @@
 		{% endif %}
 		</div>
 		
-	{% else%}
-		  <i class="fa fa-plus fontSize" aria-hidden="true" title="Increase font size"></i>
-      <i class="fa fa-minus fontSize" aria-hidden="true" title="Decrease font size"></i>
-		{% endif %}
