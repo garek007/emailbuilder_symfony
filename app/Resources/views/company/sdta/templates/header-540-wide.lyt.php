@@ -18,9 +18,9 @@
 						<table width="100%" border="0" cellspacing="0" cellpadding="0">
 							<tbody>
 								<tr>
-									<td>
+									<td style="font-size: 29px;line-height: 32px;">
 									
-									<a class="dest_url" style="font-size: 29px; color: #434448; line-height: 32px; text-decoration: none;" href="#">
+									<a class="dest_url" style="color: #434448; text-decoration: none;" href="#">
 									
 									<font style="font-family: 'Arial Narrow', Helvetica, sans-serif;"> 
 									<!--[if (!mso 14)&(!mso 15)]><!--> 

@@ -459,7 +459,7 @@ $(document).ready(function() {
       
         var $fontsize = $me.closest(".dest_url, .description").css("font-size");
               
-        var $content = $me.text();
+        var $content = $me.html();
 
         if (!$me.hasClass("editing")) {
             if ($me.hasClass('textarea')) {
@@ -479,16 +479,21 @@ $(document).ready(function() {
   
     $("body").on("click", ".fontSize", function(event) {
       event.preventDefault();
-        var $me = $(this);
-        $currentFontSize = $me.closest("a, td").css("font-size");
-        $currentFontSize = Number($currentFontSize.replace("px",""))
-      console.log($currentFontSize);
+      var $me = $(this);
+      $currentFontSize = $me.closest("td").css("font-size");
+      $currentFontSize = Number($currentFontSize.replace("px",""));
+        
+      $currentLineHeight = Number($me.closest("td").css("line-height").replace("px",""));
+      console.log($currentLineHeight);
         if($me.hasClass("fa-plus")){
-         $currentFontSize++;
+          $currentFontSize++;
+          $currentLineHeight++;
         }else{
-         $currentFontSize--;
+          $currentFontSize--;
+          $currentLineHeight--;
         }
-      $me.closest("a, td").css("font-size",$currentFontSize+"px");
+      $me.closest("td").css("font-size",$currentFontSize+"px");
+      $me.closest("td").css("line-height",$currentLineHeight+"px");
       $(".editing").css("font-size",$currentFontSize+"px");
       $(".fontSize.display").text($currentFontSize+"px");
     });  
