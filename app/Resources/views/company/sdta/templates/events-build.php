@@ -4,22 +4,15 @@
 //$utm_medium = $_REQUEST['utm_medium'];
 
 ?>
-<form class="moduleform" title="tttdform" name="tttdform" action="layouts/events/make-layout.php" method="post">
-
-
-      <input name="utm_source" type="hidden" id="utm_source" size="30" value="<?php //echo $utm_source; ?>">
-      <input name="utm_medium" type="hidden" id="utm_medium" value="<?php //echo $utm_medium; ?>" size="30">
-      <input name="utm_campaign" type="hidden" id="utm_campaign" value="<?php //echo $utm_campaign; ?>" size="30">
+<form class="moduleform" title="tttdform" name="tttdform" action="{{ path('emailproject_make_event_layout') }}" method="post">
 
 
 
 
-<div class="row"> 
-<div class="first-col cols_12-8">
- <label for="blogposturl">Blog Post URL (Top Things to Do ONLY)</label>
-  <input name="blogposturl" type="text" id="blogposturl" size="30">
-  </div>
-  </div>
+
+
+
+
 
 <div class="row">
 
@@ -47,7 +40,7 @@
        
   </tbody>
 </table>
-<input type="submit" value="Generate HTML" class="button">
+<input type="submit" value="Generate HTML" class="button generateHTML">
 </div>
 
 </form>

@@ -161,12 +161,12 @@ class EmailprojectController extends Controller
           $emailproject = $em->getRepository('AppBundle:Emailproject')->find($projectID);
           $emailproject->setBody($html);
           $em->flush($emailproject);
-
           return new Response();
-
           break;
-        default:break;	
-
+        case "events-build":
+          $module = $options['flag'];//same as module name so we just use the flag
+          return $this->render('company/'.$company.'/templates/'.$module.'.php');
+          break;
         case "syncToExacttarget":
         $html = $options['html'];
         $etID = $options['etID'];
@@ -178,7 +178,42 @@ class EmailprojectController extends Controller
      
 
     }
-
+    public function make_event_layoutAction(Request $request)
+    {
+      $loggedInUser = $this->getUser();
+      $company = $loggedInUser->getCompany(); 
+      $options = $request->request->get('options');
+      //$params = array();
+      parse_str($options,$params);
+      
+      $titles = $params["title"];
+      $months = $params["month"];
+      $dates = $params["date"];
+      $urls = $params["dest_url"];
+      $ad_contents = $params["ad_content"];
+      
+      $rows = [];
+      
+      foreach($titles as $index => $title){
+        //next just need to see if title is empty, if so move on
+        if($title == '') break;
+        $x = new \stdClass();
+        
+        $x->title = $title;
+        $x->month = $months[$index];
+        $x->eventdate = $dates[$index];
+        $x->url = $urls[$index];
+        $x->adcontent = $ad_contents[$index];
+        
+        $rows[]=$x;
+        
+      }
+   
+      
+      return $this->render('company/'.$company.'/templates/events.lyt.php',array(
+            'module' => 'events',
+          'rows'=> $rows ));
+    }
     /**
      * Deletes a emailproject entity.
      *

@@ -6,7 +6,7 @@
 		console.log(t);		
 		
 		//if($(this).is('.cloudinary')){$uploadLocation = 'cloudinary';}
-		//$uploadLocation = 'cloudinary';
+		$uploadLocation = 'myleb_folder';
 
 		$(t).addClass('activeImage');
 		var $w = $(t).data('width');

@@ -17,7 +17,7 @@
                         <!--[if (!mso 14)&(!mso 15)]><!--> 
                         </font> 
                         <!--<![endif]--></font></td>
-                      <td valign="top" align="right" style="font-size: 12px;" class="calltoaction"><a style="text-decoration: none; color: #979597;" href="#"> <font style="font-family: 'Arial Narrow', Helvetica, sans-serif;"> 
+                      <td valign="top" align="right" style="font-size: 12px;" class="calltoaction top-right"><a style="text-decoration: none; color: #979597;" href="#"> <font style="font-family: 'Arial Narrow', Helvetica, sans-serif;"> 
                         <!--[if (!mso 14)&(!mso 15)]><!--> 
                         <font style="font-family: Oswald, 'Arial Narrow', Helvetica, Arial, sans-serif;"> 
                         <!--<![endif]--> 
@@ -31,6 +31,24 @@
                 <table width="100%" cellspacing="0" cellpadding="0" border="0" class="eventcal">
                   <tbody>
                     <!-- START: ROW -->
+                    {% if rows is defined %}
+                      {% for row in rows %}
+                    {% if loop.index0 % 2 == 0 %}
+                    <tr>
+                      <td width="50%" valign="top" align="left" style="padding-right: 5px; padding-top: 20px; padding-bottom: 20px; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #dec79e;" class="blockme left">
+                      {{ include('company/sdta/templates/events.single.html',{row:row}) }}
+                      </td>
+                    {% else %}
+                      
+                      <td width="50%" valign="top" align="left" style="padding-left: 5px; padding-top: 20px; padding-bottom: 20px; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #dec79e;" class="blockme right"> 
+                      {{ include('company/sdta/templates/events.single.html',{row:row}) }}
+                      </td>
+                    </tr>   
+                    {% endif %}
+                     
+                      {% endfor %}
+                    
+                    {% else %}
                     <tr>
                       <td width="50%" valign="top" align="left" style="padding-right: 5px; padding-top: 20px; padding-bottom: 20px; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #dec79e;" class="blockme left">
                       {{ include('company/sdta/templates/events.single.html') }}
@@ -39,6 +57,7 @@
                       {{ include('company/sdta/templates/events.single.html') }}
                       </td>
                     </tr>
+                    {% endif %}
                     <!-- END: ROW --> 
                   </tbody>
                 </table></td>

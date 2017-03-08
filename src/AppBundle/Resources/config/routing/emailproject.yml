@@ -37,3 +37,8 @@ emailproject_ajax:
     path:     /ajax
     defaults: { _controller: "AppBundle:Emailproject:ajax" }
     methods:  [GET, POST]
+    
+emailproject_make_event_layout:
+    path:     /make_event_layout
+    defaults: { _controller: "AppBundle:Emailproject:make_event_layout" }
+    methods:  [GET, POST]

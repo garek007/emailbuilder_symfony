@@ -1,4 +1,3 @@
-console.log("we working");
 function closeLoader(){
 	$('#load').dialog('close');
 	$('#loadContent').empty();	
@@ -32,8 +31,29 @@ function getProjectID(){
   */
 }
 
-function makeAjaxCall(options,callback){
-	var baseURL = "/emailproject/ajax";	
+
+ $('body').on('click', '.events-build', function(event) {
+  
+   $(this).closest(".contentarea_container").find(".contentarea").addClass("use-event-build-list");
+   var propsObject = {
+    flag:"events-build"
+  };
+  makeAjaxCall(propsObject,"/emailproject/ajax",function(data){
+    $('#loadContent').html(data);
+    $('#load').dialog('open');
+  });	
+ });	
+
+$('body').on('submit','.moduleform', function(e) {
+    e.preventDefault();
+    formData = $(this).serialize();
+    makeAjaxCall(formData,"/emailproject/make_event_layout",function(data){
+      $(".contentarea").replaceWith(data);
+      closeLoader();
+    });
+});
+
+function makeAjaxCall(options,baseURL,callback){
 	
 	$.ajax({
 		type: "POST",
@@ -120,7 +140,7 @@ function doDraggable() {
 							module:ui.draggable.data("module")
 						};
            
-						makeAjaxCall(propsObject,insertDroppedModule);						
+						makeAjaxCall(propsObject,"/emailproject/ajax",insertDroppedModule);						
 				
     				doDraggable();
 
@@ -270,7 +290,7 @@ $(document).ready(function() {
 						html:theCode,
 						etID:$("#exacttarget_id").val()
 					};
-					makeAjaxCall(propsObject,function(data){
+					makeAjaxCall(propsObject,"/emailproject/ajax",function(data){
 						console.log(data);//need to make this update a DIV onscreen
 						return;
 					});
@@ -292,7 +312,7 @@ $(document).ready(function() {
 						utm_campaign: $('#utm_campaign').val(),
 						utm_medium: $('#utm_medium').val()
 					};										
-					makeAjaxCall(saveObject,function(data){
+					makeAjaxCall(saveObject,"/emailproject/ajax",function(data){
             $('.filled').each().unwrap();
             $(".saved").fadeIn().delay(3000).fadeOut();
 					});					
@@ -357,14 +377,7 @@ $(document).ready(function() {
 			$('#container').append($moduleHTML);
 			$(".duplicated").unwrap().removeClass("duplicated");
 		});	
-	
-	
-
-
-	
-	 $('body').on('click', '.events-build', function(event) {
-		 doAJAX.loadEventBuildForm("events-build.php");
-	 });	
+  
  		$('body').on('click', '.toggle_sponsored', function(event) {
 			var $me = $(this).closest(".contentarea_container").find(".sponsored");
 			if($me.hasClass("on")){
@@ -510,10 +523,8 @@ $(document).ready(function() {
 				var $link = $(this).closest("a").attr("href");
 				var $type = $me.data("linktype");
         var $pos = $me.data("position");
-				$(this).removeClass('linked');
 				$(this).closest('.blockme, .first_buffer_row, .pasted, .linkinput').prepend('<input autofocus class="editing link-input" data-position="'+$pos+'"/>');
-				$('.editing').val($link).focus();
-				$(this).addClass('linking');	
+				$('.editing').val($link).focus();	
 			}else{
 				$me.addClass("active_editing");
 				$me.closest(".blockme").prepend('<input autofocus class="editing img-input"/>');				
@@ -528,19 +539,20 @@ $(document).ready(function() {
           $(".fontSize").remove();
             //var $type = $me.data('linktype');
 						var $newValue = $me.val();
-
-					
+            var $dad = $me.closest('.blockme, .numbered-list-item, .pasted');
+				    var $container = $me.closest(".contentarea_container");
 	         
 
             if ($me.hasClass('link-input')) {
               var $pos = $($me).data("position");
               
               if($pos != "undefined"){
-                $me.closest('.blockme, .numbered-list-item, .pasted').find("."+$pos + " a").attr('href', $newValue);
+                $dad.find("."+$pos + " a").attr('href', $newValue);
               }else{  
-                $me.closest('.blockme, .numbered-list-item, .pasted').find('a').attr('href', $newValue);  
+                $dad.find('a').attr('href', $newValue);  
               }
-              $('.linking').addClass('linked').removeClass('linking');
+              $container.prepend("<div class=\"linked_url\">Module linked to URL</div>");
+              //$('.linking').addClass('linked').removeClass('linking');
               $me.remove();
 
             } else if ($me.hasClass('img-input')) {

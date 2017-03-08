@@ -8,7 +8,7 @@
 		{% if controls == "headline" %}
 			<i class="fa fa-usd toggle_sponsored" aria-hidden="true"></i>
 		{% endif %}
-		{% if controls == "header-540" or "header-600" %}
+		{% if controls == "header-540" or controls == "header-600" %}
 			<i class="fa" aria-hidden="true" data-linktype="onecol"></i>
 		{% endif %}
 		{% if controls == "four-up" %}
@@ -34,6 +34,7 @@
 			<i class="fa fa-th-list events-build" data-module="events-build" aria-hidden="true"></i>
 			<i class="fa fa-plus addEvent right fa-1x" aria-hidden="true" title="add event"></i>
 			<i class="fa fa-minus removeEvent right fa-1x" aria-hidden="true" title="remove event"></i>
+			<i class="fa fa-link link events" aria-hidden="true" data-position="top-right"></i>
 		{% endif %}
 		{% if controls == "signatures" %}
 			<div id="addSignature">

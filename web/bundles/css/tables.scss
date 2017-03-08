@@ -33,6 +33,10 @@ table.tablesorter tbody td, .inputTable td {
 	vertical-align: top;
   font-size:$tableFontSize;
 }
+.inputTable td, .inputTable input{
+  margin:0;
+  padding:0;
+}
 table.tablesorter tbody tr.odd td {
 	background-color:#F0F0F6;
 }

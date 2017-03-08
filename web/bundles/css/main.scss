@@ -160,8 +160,16 @@ small,
 .linking {
 	background: red;
 }
-.linked {
+.linked_url {
 	background: green;
+  position:absolute;
+  right:-130px;
+  top:0;
+  width:100px;
+  text-align: center;
+  color:#fff;
+  padding:10px;
+  
 }
 
 .filled p {

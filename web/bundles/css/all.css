@@ -129,8 +129,15 @@ small,
 .linking {
   background: red; }
 
-.linked {
-  background: green; }
+.linked_url {
+  background: green;
+  position: absolute;
+  right: -130px;
+  top: 0;
+  width: 100px;
+  text-align: center;
+  color: #fff;
+  padding: 10px; }
 
 .filled p {
   margin: 0; }
@@ -484,6 +491,10 @@ table.tablesorter tbody td, .inputTable td {
   vertical-align: top;
   font-size: 85%; }
 
+.inputTable td, .inputTable input {
+  margin: 0;
+  padding: 0; }
+
 table.tablesorter tbody tr.odd td {
   background-color: #F0F0F6; }
 
@@ -531,6 +542,9 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
   opacity: 1.0;
   margin-right: 10px;
   color: #fff; }
+
+.blockme .event .fa {
+  position: absolute; }
 
 .cropbox .close,
 .cropbox .fa {
