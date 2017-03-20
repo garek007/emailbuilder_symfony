@@ -166,7 +166,7 @@ class EmailprojectController extends Controller
         case "events-build": 
           $module = $options['module'];
           $route = $options['route'];
-          return $this->render('company/'.$company.'/templates/'.$module.'.php',array('route'=>$route));
+          return $this->render('company/'.$company.'/templates/'.$module.'.php',array('route'=>'/emailproject/make_event_layout'));
           break;
         case "syncToExacttarget":
         $html = $options['html'];
