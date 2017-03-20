@@ -163,9 +163,10 @@ class EmailprojectController extends Controller
           $em->flush($emailproject);
           return new Response();
           break;
-        case "events-build":
-          $module = $options['flag'];//same as module name so we just use the flag
-          return $this->render('company/'.$company.'/templates/'.$module.'.php');
+        case "events-build": 
+          $module = $options['module'];
+          $route = $options['route'];
+          return $this->render('company/'.$company.'/templates/'.$module.'.php',array('route'=>$route));
           break;
         case "syncToExacttarget":
         $html = $options['html'];
@@ -211,9 +212,55 @@ class EmailprojectController extends Controller
    
       
       return $this->render('company/'.$company.'/templates/events.lyt.php',array(
-            'module' => 'events',
-          'rows'=> $rows ));
+          'module' => 'events',
+          'rows'=> $rows )
+            );
     }
+    public function list_buildAction(Request $request)
+    {
+      //if there is a module option, then load the form
+      $loggedInUser = $this->getUser();
+      $company = $loggedInUser->getCompany();
+      $options = $request->request->get('options');
+      
+      if(!empty($options['module'])){
+        $module = $options['module'];
+        $flag = $options['flag'];
+        $route = $options['route'];
+        $listItems = (!empty($options['listItems'])) ? $options['listItems'] : "empty" ;
+        return $this->render('company/'.$company.'/templates/'.$module.'.php',array(   
+          'module' => $module,
+          'action'=> $flag,
+          'route'=> $route,
+          'listItems'=> $listItems)
+          );
+      }else{
+
+      parse_str($options,$params);
+      
+      $titles = $params["title"];
+      $urls = $params["dest_url"];
+      
+      $rows = [];
+      
+      foreach($titles as $index => $title){
+        //next just need to see if title is empty, if so move on
+        if($title == '') break;
+        $x = new \stdClass();
+        
+        $x->title = $title;
+        $x->url = $urls[$index];
+        
+        $rows[]=$x;
+        
+      }
+    
+      
+      return $this->render('company/'.$company.'/templates/paragraph.lyt.php',array(
+          'module' => 'simple-list',
+          'rows'=> $rows ));
+      }
+    }  
     /**
      * Deletes a emailproject entity.
      *

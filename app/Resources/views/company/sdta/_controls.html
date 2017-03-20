@@ -5,6 +5,9 @@
 		<i class="fa fa-files-o duplicate" aria-hidden="true" title="duplicate"></i>
 		<i class="fa fa-clipboard grab-module-code" aria-hidden="true" title="copy to clipboard" data-action="grabModuleCode"></i>
 		<i class="fa fa-pencil-square-o edit-module-code" aria-hidden="true" title="edit the code" data-action="editModuleCode"></i>
+		{% if controls == "paragraph" %}
+		  <i class="fa fa-th-list list-build" data-module="list-build" data-route="/emailproject/list_build" data-action="simple-list" aria-hidden="true"></i>
+		{% endif %}
 		{% if controls == "headline" %}
 			<i class="fa fa-usd toggle_sponsored" aria-hidden="true"></i>
 		{% endif %}
@@ -31,7 +34,7 @@
 			<i class="fa fa-minus removeRow right fa-1x" aria-hidden="true" title="remove row"></i>
 		{% endif %}
 		{% if controls == "events" %}
-			<i class="fa fa-th-list events-build" data-module="events-build" aria-hidden="true"></i>
+			<i class="fa fa-th-list events-build" data-module="list-build" data-route="/emailproject/ajax" data-action="events-build" aria-hidden="true"></i>
 			<i class="fa fa-plus addEvent right fa-1x" aria-hidden="true" title="add event"></i>
 			<i class="fa fa-minus removeEvent right fa-1x" aria-hidden="true" title="remove event"></i>
 			<i class="fa fa-link link events" aria-hidden="true" data-position="top-right"></i>

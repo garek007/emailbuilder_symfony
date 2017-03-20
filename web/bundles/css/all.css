@@ -105,12 +105,18 @@ small,
   margin: 0 auto;
   border: 1px solid #333; }
 
+.rowlabel {
+  width: 2%; }
+
+.title {
+  width: 20%; }
+
 .date,
 .month {
   width: 5%; }
 
 .url {
-  width: 50%; }
+  width: 45%; }
 
 .content {
   width: 20%; }

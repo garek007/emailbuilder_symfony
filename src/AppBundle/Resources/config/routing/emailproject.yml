@@ -42,3 +42,8 @@ emailproject_make_event_layout:
     path:     /make_event_layout
     defaults: { _controller: "AppBundle:Emailproject:make_event_layout" }
     methods:  [GET, POST]
+    
+emailproject_list_build:
+    path:     /list_build
+    defaults: { _controller: "AppBundle:Emailproject:list_build" }
+    methods:  [GET, POST]    

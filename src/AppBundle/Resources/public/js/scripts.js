@@ -228,6 +228,8 @@ var folderID;
 
 
   $('body').on('click', '.addEvent', function(event) {
+      alert("this feature is not set up yet");
+    return;
         var $dad = $(this).closest(".contentarea_container");
 				var $numEvents = $dad.find('.event').length;
         var isOdd = ($numEvents % 2) == 1;
@@ -261,6 +263,8 @@ var folderID;
 
     });
     $('body').on('click', '.addRow', function(event) {
+       alert("this feature is not set up yet");
+    return;
         var $dad = $(this).closest(".contentarea_container").find('.numbered-list-container');
         var $numRows = $dad.find('.numbered-list-item').length;
         console.log($dad);

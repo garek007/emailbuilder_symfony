@@ -32,13 +32,32 @@ function getProjectID(){
 }
 
 
- $('body').on('click', '.events-build', function(event) {
-  
-   $(this).closest(".contentarea_container").find(".contentarea").addClass("use-event-build-list");
+ $('body').on('click', '.events-build, .list-build', function(event) {
+   var $dad = $(this).closest(".contentarea_container");
+   $dad.addClass("use-event-build-list");
+
+   var $module = $(this).data("module");
+   var $route = $(this).data("route");
+   var $flag = $(this).data("action");
    var propsObject = {
-    flag:"events-build"
+    flag:$flag,
+    module:$module,
+    route:$route 
   };
-  makeAjaxCall(propsObject,"/emailproject/ajax",function(data){
+   
+   if($dad.hasClass("simple-list")){
+     var $listItems = [];
+     $($dad.find("ul li")).each(function(i,li){
+      $listItems.push(
+        new Array($(li).text(),$(li).find("a").attr("href"))
+      );
+     });
+     propsObject.listItems = $listItems;
+    }
+   
+   
+   
+  makeAjaxCall(propsObject,$route,function(data){
     $('#loadContent').html(data);
     $('#load').dialog('open');
   });	
@@ -47,8 +66,10 @@ function getProjectID(){
 $('body').on('submit','.moduleform', function(e) {
     e.preventDefault();
     formData = $(this).serialize();
-    makeAjaxCall(formData,"/emailproject/make_event_layout",function(data){
-      $(".contentarea").replaceWith(data);
+    var $action = $(this).attr('action');
+  
+    makeAjaxCall(formData,$action,function(data){
+      $(".use-event-build-list").replaceWith(data);
       closeLoader();
     });
 });
