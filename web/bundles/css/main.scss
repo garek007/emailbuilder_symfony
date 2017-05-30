@@ -57,7 +57,7 @@ footer{
   border-top: 1px solid #555;
 
 
-  
+
 }
 footer .row{
   background:transparent;
@@ -175,7 +175,7 @@ small,
   text-align: center;
   color:#fff;
   padding:10px;
-  
+
 }
 
 .filled p {
@@ -239,7 +239,7 @@ small,
 }
 .required {
 
-	
+
 }
 .required:after{
   content:" *";
@@ -443,10 +443,10 @@ small,
 	color: #f00;
 }
 span.empty {
-  display: block; 
+  display: block;
   text-align:center;
   padding:50px;
-	background:transparent;	
+	background:transparent;
 
 
 }
@@ -455,7 +455,7 @@ span.empty {
 }
 .email_show_container{
   border:1px solid black;box-sizing:border-box;
-  
+
 }
 .email_show_container .module_controls{
   display:none;
@@ -472,12 +472,20 @@ span.empty {
   display:none;
   z-index: 1000;
 }
-.dropzone{
-  height:5px;
-  background:#cfffd4;
+.dropzone {
+  height: 0px;
+  position: relative;
 }
-.dropzone.activated{
-  height:30px;
+.dropzone--target{
+  background: #b0ffb8;/*cfffd4;*/
+  height:20px;
+  top:-10px;
+  position:absolute;
+  width:100%;
+}
+
+.dropzone.activated {
+  height: 40px;
 }
 .activated {
 	border: 1px dotted red;
@@ -506,7 +514,7 @@ span.empty {
   border-right:1px solid #333;
   border-bottom:1px solid #ddd;
   border-top:1px solid #ddd;
-}  
+}
 .project_options:hover{
   padding-left:20px;
   transition: .5s;
