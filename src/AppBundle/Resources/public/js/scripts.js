@@ -9,84 +9,14 @@ var monthNum = monthNums[d.getMonth()];
 var nextMonthAbbr = monthNames[d.getMonth() + 1];
 var fullMonthName = monthNamesFull[d.getMonth()];
 var year = d.getFullYear();
-var startDate = getNearestTuesday(todaysDate, todaysWeekday);
-var nextFriday = getNearestFriday(todaysDate,todaysWeekday);
-var endDate = Number(startDate + 5);
+//var startDate = getNearestTuesday(todaysDate, todaysWeekday);
+//var nextFriday = getNearestFriday(todaysDate,todaysWeekday);
+//var endDate = Number(startDate + 5);
 var yearMonDay = year+"-"+(monthNums[d.getMonth()])+"-"+todaysDate;
 var monDayYear = fullMonthName + " " + todaysDate + ", " + year;
-function getNearestTuesday(t, wd) {
-    var sDate; //this will be set to Tuesday below.
-    switch (wd) {
-        case 0:
-            sDate = t + 2;
-            break;
-        case 1:
-            sDate = t + 1;
-            break;
-        case 2:
-            sDate = t;
-            break;
-        case 3:
-            sDate = t - 1;
-            break;
-        case 4:
-            sDate = t - 2;
-            break;
-        case 5:
-            sDate = t - 3;
-            break;
-        case 6:
-            sDate = t - 4;
-            break;
-        default:
-            Date = t;
-    }
-    return sDate;
-}
-function getNearestFriday(t, wd) {
-    var sDate; //this will be set to Friday below.
-    switch (wd) {
-        case 0:
-            sDate = t + 5;
-            break;
-        case 1:
-            sDate = t + 4;
-            break;
-        case 2:
-            sDate = t+3;
-            break;
-        case 3:
-            sDate = t + 2;
-            break;
-        case 4:
-            sDate = t + 1;
-            break;
-        case 5:
-            sDate = t;
-            break;
-        case 6:
-            sDate = t - 1;
-            break;
-        default:
-            Date = t;
-    }
-    return sDate;
-}
-function tagForGA(url, tmp) {
-    var today = new Date();
-    if (tmp == "tttd") {
-        var cname = "Top Things to Do";
-        var source = $('#utm_source').val();//year + '_' + monthAbbr + '_' + startDate + '-' + endDate;
-    } else if (tmp == "monthly") {
-        var cname = "Consumer Newsletter Monthly";
-        var source = monthNames[d.getMonth() + 1];
-    }
-    var taggedURL = url + '?utm_campaign=' + cname + '&utm_source=' + source + '&utm_medium=email';
-    return taggedURL;
-}
+
 function updateEventCal(data){
 	console.log(data);
-	
 }
 (function($){
 var $url = "index.php";
@@ -97,9 +27,9 @@ var $url = "index.php";
 		//var $name = e.target.name;
 		var $dad = $(this).closest(".contentarea_container");
     var $name = e.target.name;
-		if($(this).is(":checked")){		
+		if($(this).is(":checked")){
 		 // var $sigPath = path+"signatures."+$name+".html";
-		  
+
 		  var $numSigs = $dad.find('.signature').length;
 		  var $isOdd = ($numSigs % 2) == 1;
 			var propsObject = {
@@ -111,59 +41,15 @@ var $url = "index.php";
 				if($isOdd){
 					$dad.find('.eventcal tr:last-child .blockme:last-child').html(data);
 				}else{
-					$dad.find('.eventcal >tbody').append(data);	}			
+					$dad.find('.eventcal >tbody').append(data);	}
 			});
 		}else{
       console.log($dad);
       console.log($name);
 				$dad.find("."+$name).remove();
-		}		
+		}
 	});
-var folderID;		
-	$("#template").change(function(e){
-			var $val = $(this).val()	;
-			switch($val){
-				case "Press Release": 
-					$("#project_name").val(yearMonDay+" - Press Release - ");
-					$("#et_folder_input").val(40560);
-					$("#template").val("pressrelease");
-					break;				
-				case "execReport": 
-					$("#project_name").val(year +"-"+monthNum+"-"+pad(nextFriday)+"-Executive-Update-Email");
-					$("#subject").val("SDTA Board of Directors Update - "+fullMonthName+" "+nextFriday+", "+year);
-					$("#et_folder_input").val(343713);
-					break;
-				case "Top Things to Do":
-					$("#project_name").val(yearMonDay+" TTTD");
-					$("#subject").val("San Diego's Top Things to Do This Weekend");			
-					$("#et_folder_input").val(324989);
-					$("#template").val("tttd");	
-					break;
-				case "Consumer News":
-					$("#project_name").val(year + " " + nextMonthAbbr.toUpperCase() + " Consumer News");
-					$("#subject").val("Next Month in San Diego");
-					$("#et_folder_input").val(40559);
-					$("#template").val("monthly");			
-					break;							
-				default:break;
-			}
-		});		
-
-
-    $('body').on('change', '#template', function() {
-        var id = this.value;
-        if (id == "tttd") {
-            var cname = "Top Things to Do";
-            var source = year + "_" + monthAbbr + "_" + startDate + "-" + endDate;
-        } else {
-            var cname = "Consumer Monthly";
-            var source = nextMonthAbbr;
-
-        }
-        $("#utm_campaign").val(cname);
-        $("#utm_source").val(source);
-
-    });
+var folderID;
 
     $('body').on('change', 'input[name="title[]"]', function() {
         //if tagged == yes
@@ -182,7 +68,7 @@ var folderID;
 			}else{
 				$dates2.wrap("<em>");
 			}
-			
+
 		});
  		$('body').on('click', '.toggle', function(event) {
 				var $main = $(this).closest(".contentarea_container");
@@ -201,7 +87,7 @@ var folderID;
 						</ul>\
           Weekly Lodging Performance\
 					');
-					
+
 				}else{
 					$(this).removeClass("fa-circle").addClass("fa-circle-o");
 					$main.find(".section_title").text("UPCOMING EVENTS");
@@ -210,20 +96,18 @@ var folderID;
 					$main.find(".insert").html("");
 				}
 				console.log($toggled);
-				
+
 		});
 
-    $('body').on('click', '.ltblue', function(event) {
-        $(this).closest(".contentarea_container").find('.fullpad').attr('bgcolor', '#dbe7ef').attr('background', 'none');
-
-    });
-    $('body').on('click', '.white', function(event) {
-        $(this).closest(".contentarea_container").find('.fullpad').attr('bgcolor', '#ffffff').attr('background', 'none');
-
-    });
-    $('body').on('click', '.orange', function(event) {
-        $(this).closest(".contentarea_container").find('.fullpad').attr('bgcolor', '#fddea6').attr('background', 'http://image.exct.net/lib/fe6e15707166047a7715/m/1/sdta_nl_small_texture_tan.jpg');
-
+    $('body').on('click', '.change-background', function(event) {
+      var color = $(this).data("color");
+      if($(this).attr("data-bg")){
+        var bg = $(this).data("bg");
+        console.log(bg);
+      }else{
+        var bg = "none";
+      }
+      $(this).closest(".contentarea_container").find(".fullpad").attr("bgcolor", "#"+color).attr('background', bg);
     });
 
 
@@ -248,7 +132,7 @@ var folderID;
     });
 
     $('body').on('click', '.removeEvent', function(event) {
-		
+
         var $dad = $(this).closest(".contentarea_container");
 				var $numEvents = $dad.find('.event').length;
         var isOdd = ($numEvents % 2) == 1;
@@ -279,6 +163,6 @@ var folderID;
         var $dad = $(this).closest(".contentarea_container");
         var $last = $dad.find('.list-item').last().remove();
     });
-  
-    
+
+
 })(jQuery);

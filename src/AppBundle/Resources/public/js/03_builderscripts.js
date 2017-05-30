@@ -1,6 +1,6 @@
 function closeLoader(){
 	$('#load').dialog('close');
-	$('#loadContent').empty();	
+	$('#loadContent').empty();
 }
 function pad(n) {
     return (n < 10) ? ("0" + n) : n;
@@ -30,52 +30,10 @@ function getProjectID(){
   }
   */
 }
-
-
- $('body').on('click', '.events-build, .list-build', function(event) {
-   var $dad = $(this).closest(".contentarea_container");
-   $dad.addClass("use-event-build-list");
-
-   var $module = $(this).data("module");
-   var $route = $(this).data("route");
-   var $flag = $(this).data("action");
-   var propsObject = {
-    flag:$flag,
-    module:$module,
-    route:$route 
-  };
-   
-   if($dad.hasClass("simple-list")){
-     var $listItems = [];
-     $($dad.find("ul li")).each(function(i,li){
-      $listItems.push(
-        new Array($(li).text(),$(li).find("a").attr("href"))
-      );
-     });
-     propsObject.listItems = $listItems;
-    }
-   
-   
-   
-  makeAjaxCall(propsObject,$route,function(data){
-    $('#loadContent').html(data);
-    $('#load').dialog('open');
-  });	
- });	
-
-$('body').on('submit','.moduleform', function(e) {
-    e.preventDefault();
-    formData = $(this).serialize();
-    var $action = $(this).attr('action');
-  
-    makeAjaxCall(formData,$action,function(data){
-      $(".use-event-build-list").replaceWith(data);
-      closeLoader();
-    });
-});
-
+function deactivate(){
+	$('.activated').removeClass('activated');
+}
 function makeAjaxCall(options,baseURL,callback){
-	
 	$.ajax({
 		type: "POST",
 		dataType: "text",
@@ -87,9 +45,8 @@ function makeAjaxCall(options,baseURL,callback){
 	}).done(function (data) {
 			callback(data);
 	});
-	
-	
 }
+//Why did I name this codePop?
 function codePop(code,addButton){
   var $button = '';
   if(addButton==true){
@@ -99,25 +56,59 @@ function codePop(code,addButton){
   $('.ui-dialog').addClass('grabcode');
   $('#load').dialog('open');
 }
+ $('body').on('click', '.events-build, .list-build', function(event) {
+   var $dad = $(this).closest(".contentarea_container");
+   $dad.addClass("use-event-build-list");
 
+   var $module = $(this).data("module");
+   var $route = $(this).data("route");
+   var $flag = $(this).data("action");
+   var propsObject = {
+    flag:$flag,
+    module:$module,
+    route:$route
+  };
+
+   if($dad.hasClass("simple-list")){
+     var $listItems = [];
+     $($dad.find("ul li")).each(function(i,li){
+      $listItems.push(
+        new Array($(li).text(),$(li).find("a").attr("href"))
+      );
+     });
+     propsObject.listItems = $listItems;
+    }
+
+  makeAjaxCall(propsObject,$route,function(data){
+    $('#loadContent').html(data);
+    $('#load').dialog('open');
+  });
+ });
+
+$('body').on('submit','.moduleform', function(e) {
+    e.preventDefault();
+    formData = $(this).serialize();
+    var $action = $(this).attr('action');
+
+    makeAjaxCall(formData,$action,function(data){
+      $(".use-event-build-list").replaceWith(data);
+      closeLoader();
+    });
+});
 
 insertDroppedModule=function(html,module){
 	if($(".empty")[0]){
 			$('#container').html(html);
 		}else{
-
-		$(".droppedHere").after(html);
+			$(".droppedHere").after(html);
 		}
-
-		
 		$(".dropzone").remove();
 		$(".droppedHere").removeClass("droppedHere");
-		$('.ui-droppable').droppable("destroy");			
-			
+		deactivate();
+		//$('.ui-droppable').droppable("destroy");
 }
 
-
-//maybe there's a better way to do this, I need to call this function 
+//maybe there's a better way to do this, I need to call this function
 //every.single.time an event happens because even after a drag N drop
 //jquery doesn't see the new draggable items without initializing them again
 function doDraggable() {
@@ -125,44 +116,42 @@ function doDraggable() {
         handle: ".drag",
         stop: function(event, ui) {
             var $listItem = $(this).find('.numbered-list-item');
-            $.each($listItem, function(index) {      
+            $.each($listItem, function(index) {
                 $(this).find('.number').text(index + 1);
             });
         }
-    });	
+    });
 	  $(".fullhtml").click(function(e){
       e.preventDefault();
     });
     $(".fullhtml").draggable({
+			scroll:true,
+			helper:"clone",
     	revert: function (event, ui) {
     		$('.draggedFrom').removeClass('draggedFrom');
         $(".dropzone").remove();
     		return true;
     	},
     	start: function (event, ui) {
-
     		$container = $("#container");
-
-					var $contentblock = $(".contentarea_container");
-					$.each($contentblock, function(){
-						$(this).after('<div class="dropzone"></div>');
-						//$(this).before('<div class="dropzone" style="height:20px;"></div>');
-					});
+				var $contentblock = $(".contentarea_container");
+				$.each($contentblock, function(){
+					$(this).after('<div class="dropzone"><div class="dropzone--target"></div></div>');
+					//$(this).before('<div class="dropzone" style="height:20px;"></div>');
+				});
 
     		$('.empty, .dropzone').droppable({
     			hoverClass: "activated",
           tolerance: "touch",
     			drop: function (event, ui) {
-						
 						$(this).addClass("droppedHere").removeClass("dropzone");
-						
 						var propsObject = {
 							flag:"dropModule",
 							module:ui.draggable.data("module")
 						};
-           
-						makeAjaxCall(propsObject,"/emailproject/ajax",insertDroppedModule);						
-				
+
+						makeAjaxCall(propsObject,"/emailproject/ajax",insertDroppedModule);
+
     				doDraggable();
 
     			}
@@ -170,42 +159,42 @@ function doDraggable() {
 
     	}
     });
-	
+
     $(".draggable").draggable({
         revert: function(event, ui) {
-            $('.draggedFrom').removeClass('draggedFrom');
-            $('.dropzone').remove();
-            return true;
+          $('.draggedFrom').removeClass('draggedFrom');
+          $('.dropzone').remove();
+          return true;
         },
         start: function(event, ui) {
-            var $p = $(this).parent();
-            $p.addClass('draggedFrom');
-            var $html = $p.html();
+          var $p = $(this).parent();
+          $p.addClass('draggedFrom');
+          var $html = $p.html();
 
-            //$p.droppable('disable');
+          //$p.droppable('disable');
 
-            $('.blockme, .nopad').not($p).not(".contentarea_container").droppable({
-                hoverClass: "activated",
-                drop: function(event, ui) {
-									if(ui.draggable.find('.nopad').hasClass("padLeft")){
-										ui.draggable.find('.nopad').css({'padding-right':'15px','padding-left':'0'}).addClass('padRight').removeClass('padLeft');
-									}else if(ui.draggable.find('.nopad').hasClass("padRight")){
-										ui.draggable.find('.nopad').css({'padding-left':'15px','padding-right':'0'}).addClass('padLeft');
-									}
-									
-							
-                    var $html = $(this).html();
-                    $(this).empty();
-                    //ui.draggable.detach().appendTo($(this)).removeAttr('style');
-                    ui.draggable.detach().appendTo($(this)).css({
-                        top: 0,
-                        left: 0,
-                        position: 'relative'
-                    });
-                    $('.draggedFrom').html($html).removeClass('draggedFrom');
-                    $('.ui-droppable').droppable("destroy");
-                    //$(this).removeClass('activated');
-                    doDraggable();
+          $('.blockme, .nopad').not($p).not(".contentarea_container").droppable({
+              hoverClass: "activated",
+              drop: function(event, ui) {
+								if(ui.draggable.find('.nopad').hasClass("padLeft")){
+									ui.draggable.find('.nopad').css({'padding-right':'15px','padding-left':'0'}).addClass('padRight').removeClass('padLeft');
+								}else if(ui.draggable.find('.nopad').hasClass("padRight")){
+									ui.draggable.find('.nopad').css({'padding-left':'15px','padding-right':'0'}).addClass('padLeft');
+								}
+
+
+                  var $html = $(this).html();
+                  $(this).empty();
+                  //ui.draggable.detach().appendTo($(this)).removeAttr('style');
+                  ui.draggable.detach().appendTo($(this)).css({
+                      top: 0,
+                      left: 0,
+                      position: 'relative'
+                  });
+                  $('.draggedFrom').html($html).removeClass('draggedFrom');
+                  $('.ui-droppable').droppable("destroy");
+                  //$(this).removeClass('activated');
+                  doDraggable();
                 }
             });
             //console.log($html);
@@ -227,17 +216,17 @@ $(document).ready(function() {
 /////LOOKS LIKE IT CHECKS TO SEE IF THE CONTAINER HAS THE NEW PROJECT CLASS
 ////// THEN DOES SOME AJAXY STUFFY, PROBABLY NOT A GOOD WAY TO DO THIS, SHOULD HANDLE IN INDEX.PHP	///////////////
 	if($container.hasClass("new_project")){
-		
+
 		var $tmp = $container.data("template");
 		$.get("templates/"+$tmp+".html", function(data) {
-				
-					$container.append(data);	
+
+					$container.append(data);
 					$container.removeClass("new_project");
-					$(".senddate").text(fullMonthName + " " + nextFriday + ", " + year);		
-					
-					
+					$(".senddate").text(fullMonthName + " " + nextFriday + ", " + year);
+
+
 		});
-		
+
 	}
 ////////////////////////////////////////////////////////////////////////
 		$("#project_list").tablesorter();
@@ -265,47 +254,43 @@ $(document).ready(function() {
         }
     });
 
-	
-    $('#clearContainer').click(function() {
-        if(window.confirm("Are you sure?")){
-          
-        $('#container').html("<span class=\"empty\"></span>");
-        }
-    });	
-    $('body').on('click', '.grabcode .ui-icon-closethick, .savecode', function() {
-        $('.wrapped').removeClass("wrapped").find('.contentarea').unwrap();
-        $('.ui-dialog').removeClass('grabcode');
-    });			
-	
-	
-  
 
-	
+	  $('#clearContainer').click(function() {
+	      if(window.confirm("Are you sure?")){
+
+	      $('#container').html("<span class=\"empty\"></span>");
+	      }
+	  });
+	  $('body').on('click', '.grabcode .ui-icon-closethick, .savecode', function() {
+	      $('.wrapped').removeClass("wrapped").find('.contentarea').unwrap();
+	      $('.ui-dialog').removeClass('grabcode');
+	  });
+
 	 $('body').on('click', '.savecode', function(event) {
 		 var $newCode = $("#rawhtml").val();
      $(".replaceMe").replaceWith($newCode);
 		 closeLoader();
-	 });	
-  
-  
+	 });
+
+
     $("body").on("click","#grabAllCode, .grab-module-code, .edit-module-code, #syncToET, #saveProject",function() {
 			if($("#container").find(".unedited").length){
         if(!window.confirm("Whoa, it looks like you have some unfilled content areas")){
           return;
-        }        
+        }
 			}
-
+			$(".wrapped").removeClass("wrapped");
 			var theCode = '';
 			var id = $(this).attr("id");
       var action = $(this).data("action");
       console.log(action);
-			
+
 			switch(action){
 				case "syncToET":
 					$('.contentarea_container').each(function() {
             theCode += $(this).find('.contentarea').wrap('<p/>').parent().html();
         	});
-					
+
 					var propsObject = {
 						flag:"syncToExacttarget",
 						html:theCode,
@@ -316,13 +301,13 @@ $(document).ready(function() {
 						return;
 					});
 					break;
-				case "grabAllCode":	
+				case "grabAllCode":
 					$('.contentarea_container').each(function() {
 							$(this).addClass("wrapped");
 							theCode += $(this).find('.contentarea').wrap('<p/>').parent().html();
-					});				          
+					});
 					break;
-				case "saveProject":	
+				case "saveProject":
 					var saveObject = {
 						flag:"saveProject",
 						html : $('#container').clone().find('.draggable').removeClass('ui-draggable-handle ui-draggable').end().html(),
@@ -332,33 +317,26 @@ $(document).ready(function() {
 						utm_source: $('#utm_source').val(),
 						utm_campaign: $('#utm_campaign').val(),
 						utm_medium: $('#utm_medium').val()
-					};										
+					};
 					makeAjaxCall(saveObject,"/emailproject/ajax",function(data){
             $('.filled').each().unwrap();
             $(".saved").fadeIn().delay(3000).fadeOut();
-					});					
+					});
           break;
 				default:
 					$(this).closest(".contentarea_container").addClass("wrapped");
-					theCode = $(this).closest(".contentarea_container").find('.contentarea').wrap('<p/>').parent().html();          
+					theCode = $(this).closest(".contentarea_container").find('.contentarea').wrap('<p/>').parent().html();
 					break;
 			}
       if(action=="grabModuleCode" || action == "grabAllCode"){
-        codePop(theCode,false);	
+        codePop(theCode,false);
       }else if(action=="editModuleCode"){
         $(".wrapped").find(".contentarea").addClass("replaceMe");
         codePop(theCode,true);
       }
-      
-    
-          
-          
-          
-	
-
-    });	
+    });
   //$('#saveproject').click(function() {   //used to have save functions here, merged with above });
-	
+
 //Module control functions start
     $("body").on("click", ".remove", function(e) {
         e.preventDefault();
@@ -369,11 +347,10 @@ $(document).ready(function() {
     });
 
     $('body').on('click', '.drag', function(e) {
-
-        if ($(this).closest('.contentarea_container').hasClass('activated')) {
-            $('.activated').removeClass('activated');
-        } else {
-            $('.activated').removeClass('activated');
+        //if ($(this).closest('.contentarea_container').hasClass('activated')) {
+          //  $('.activated').removeClass('activated');
+        //} else {
+            deactivate();
             $(this).closest('.contentarea_container').addClass('activated');
             var $bottomPad = $('.activated').find('.fullpad').css('padding-bottom');
             $bottomPad = $bottomPad.replace(/\D/g, '');
@@ -384,21 +361,21 @@ $(document).ready(function() {
             $topPad = $topPad.replace(/\D/g, '');
             $('#top_padding_slider').slider('value', $bottomPad);
             $('#top_padding').find('.value').text($bottomPad);
-        }
+        //}
     });
-	
+
     $('#container').sortable({
         handle: ".drag"
     });
-	
+
     $("body").on("click", ".duplicate", function() {
 			var $dad = $(this).closest(".contentarea_container");
 			var $moduleHTML = $dad.wrap("</p>").parent().html();
 			$dad.addClass("duplicated");
 			$('#container').append($moduleHTML);
 			$(".duplicated").unwrap().removeClass("duplicated");
-		});	
-  
+		});
+
  		$('body').on('click', '.toggle_sponsored', function(event) {
 			var $me = $(this).closest(".contentarea_container").find(".sponsored");
 			if($me.hasClass("on")){
@@ -416,16 +393,12 @@ $(document).ready(function() {
 		});
 
 
-		
+
 		$(".fa-calendar").click(function() {
-       $(".eventDatepicker").show(); 
-    });		
-//Module control functions end	
-	
-	
-	
-	
-	
+       $(".eventDatepicker").show();
+    });
+//Module control functions end
+
 //Control panel functions start
     $('#minimize_control_panel').click(function() {
         var $cPanel = $(this).parent();
@@ -439,60 +412,59 @@ $(document).ready(function() {
 
     });
 
-    $("#bottom_padding_slider").slider({
-        range: "min",
-        min: 0,
-        max: 100,
-        step: 10,
-        slide: function(event, ui) {
-            //$( "#amount" ).val( ui.value );
-            if ($('.activated').length) {
-                $('.activated').find('.fullpad').css({
-                    'padding-bottom': ui.value
-                });
-                $('#bottom_padding').find('.value').text(ui.value);
-            } else {
-                alert("You have not activated any modules");
-            }
-        }
-    });
-    $("#top_padding_slider").slider({
-        range: "min",
-        min: 0,
-        max: 100,
-        step: 10,
-        slide: function(event, ui) {
-            //$( "#amount" ).val( ui.value );
-            if ($('.activated').length) {
-                $('.activated').find('.fullpad').css({
-                    'padding-top': ui.value
-                });
-                $('#top_padding').find('.value').text(ui.value);
-            } else {
-                alert("You have not activated any modules");
-            }
-        }
-    });
-	
+
+		$('body').on('click', '.fa-sliders', function(e) {
+			var $dad = $(this).parent();
+			makeAjaxCall({path:"emailproject/sliders.html"},"/emailproject/get_html",function(data){
+				$dad.prepend("<div style=\"display:none;\" class=\"control-overlay\">"+data+"</div>");
+				$(".control-overlay").fadeIn();
+
+				$(".padding-slider").slider({
+		        range: "min",
+		        min: 0,
+		        max: 100,
+		        step: 10,
+		        slide: function(event, ui) {
+	            //$( "#amount" ).val( ui.value );
+							var dir = "padding-" + $(this).data("direction");
+              $dad.closest(".contentarea_container").find(".fullpad").css( dir, ui.value );
+              $('#'+dir).find('.value').text(ui.value);
+		        }
+		    });
+
+
+
+
+
+
+
+
+
+
+			});
+
+		});
+
+
     $("#resize_control_panel").resizable({ //on resize, check cpanel width and change image size
         handles: "w"
-    });	
+    });
     $(".resize_control_panel").resizable({ //on resize, check cpanel width and change image size
         handles: "w"
-    });  
+    });
    //control panel functions end
 
 
-	
-	
-	
+
+
+
 //Text edition functions start
     $('body').on('click', '.editable', function(event) {
         event.preventDefault();
         var $me = $(this);
-      
+
         var $fontsize = $me.closest(".dest_url, .description").css("font-size");
-              
+
         var $content = $me.html();
 
         if (!$me.hasClass("editing")) {
@@ -507,16 +479,16 @@ $(document).ready(function() {
                 <div class="fontSize display"></div>\
                 <i class="fa fa-plus fontSize" aria-hidden="true" title="Increase font size"></i>\
                 <i class="fa fa-minus fontSize" aria-hidden="true" title="Decrease font size"></i>');
-          
+
         }
     });
-  
+
     $("body").on("click", ".fontSize", function(event) {
       event.preventDefault();
       var $me = $(this);
       $currentFontSize = $me.closest("td").css("font-size");
       $currentFontSize = Number($currentFontSize.replace("px",""));
-        
+
       $currentLineHeight = Number($me.closest("td").css("line-height").replace("px",""));
       console.log($currentLineHeight);
         if($me.hasClass("fa-plus")){
@@ -530,28 +502,28 @@ $(document).ready(function() {
       $me.closest("td").css("line-height",$currentLineHeight+"px");
       $(".editing").css("font-size",$currentFontSize+"px");
       $(".fontSize.display").text($currentFontSize+"px");
-    });  
+    });
     $('body').on('click', '.editing', function(event) {
         event.preventDefault();
     });
-		
+
 			//next function pops up box where you input img or href link
     $('body').on('click', '.fa-external-link, .link', function(e) {
-			e.preventDefault();			
+			e.preventDefault();
 			var $me = $(this);
-			
-			if($me.hasClass("link")){	
+
+			if($me.hasClass("link")){
 				var $link = $(this).closest("a").attr("href");
 				var $type = $me.data("linktype");
         var $pos = $me.data("position");
 				$(this).closest('.blockme, .first_buffer_row, .pasted, .linkinput').prepend('<input autofocus class="editing link-input" data-position="'+$pos+'"/>');
-				$('.editing').val($link).focus();	
+				$('.editing').val($link).focus();
 			}else{
 				$me.addClass("active_editing");
-				$me.closest(".blockme").prepend('<input autofocus class="editing img-input"/>');				
+				$me.closest(".blockme").prepend('<input autofocus class="editing img-input"/>');
 			}
     });
-  
+
     $('body').on('keydown', '.editing', function(e) {
 
 
@@ -562,15 +534,15 @@ $(document).ready(function() {
 						var $newValue = $me.val();
             var $dad = $me.closest('.blockme, .numbered-list-item, .pasted');
 				    var $container = $me.closest(".contentarea_container");
-	         
+
 
             if ($me.hasClass('link-input')) {
               var $pos = $($me).data("position");
-              
+
               if($pos != "undefined"){
                 $dad.find("."+$pos + " a").attr('href', $newValue);
-              }else{  
-                $dad.find('a').attr('href', $newValue);  
+              }else{
+                $dad.find('a').attr('href', $newValue);
               }
               $container.prepend("<div class=\"linked_url\">Module linked to URL</div>");
               //$('.linking').addClass('linked').removeClass('linking');
@@ -588,14 +560,14 @@ $(document).ready(function() {
                 $me.find('span').removeClass('unedited').html($newValue.replace(/(?:\r\n|\r|\n)/g, '<br />')).unwrap();
                 return false;
             }
-          
+
 
         }
 
     });
 //Text editor functions end
 
-  
+
 
 
 		$('body').delegate('.eventDatepicker', 'click', function(event) {
@@ -610,7 +582,7 @@ $(document).ready(function() {
 			},
 			{
 				minDate: -1,
-				showButtonPanel: true,					
+				showButtonPanel: true,
 				dateFormat: "M<br>dd"
 			}
 			);
@@ -631,18 +603,18 @@ var $r1, m1, d1, date1;
 							var dTime = d.getTime();
 							m1 = monthNames[dPickerDate.getMonth()];
 							d1 = dPickerDate.getDate();
-							var vTime = dPickerDate.getTime();	
-							console.log(vTime<dTime);							
-							if(vTime<dTime){							
+							var vTime = dPickerDate.getTime();
+							console.log(vTime<dTime);
+							if(vTime<dTime){
 								date1 = "THRU";
 							}else{
 								date1 = m1.toUpperCase() + " " + d1;
 							}
-														
-							$r1 = v;						
-															
+
+							$r1 = v;
+
 						}else{
-		
+
 							var m2 = monthNames[dPickerDate.getMonth()];
 							var d2 = dPickerDate.getDate();
 							if(m1 != m2 || date1 == "THRU"){
@@ -650,18 +622,18 @@ var $r1, m1, d1, date1;
 
 								var string = date1 + "<br>-" + m2.toUpperCase() + " " + d2;
 								$(".active").html(  string ).removeClass("active");
-							//	$(this).find(".ui-datepicker").hide();		
+							//	$(this).find(".ui-datepicker").hide();
 							}else{
 								//same month
 								var string = m2.toUpperCase();
 								string+= "<br>" + d1 + "-" + d2;
 								$(".active").html(  string ).removeClass("active");
-								//$(this).hide();						
+								//$(this).hide();
 							}
-							
-						$(".eventDatepickerRange").datepicker("destroy");	
-						$r1 = undefined;	
-							
+
+						$(".eventDatepickerRange").datepicker("destroy");
+						$r1 = undefined;
+
 						}
 						console.log(v);
 					}
@@ -671,7 +643,7 @@ var $r1, m1, d1, date1;
     });
 
 //SCREENSHOT STUFF
-	
+
 
 
 
@@ -687,7 +659,7 @@ var $r1, m1, d1, date1;
     });
     $("#datepicker").datepicker();
 
-		
+
     $('#slider').slider({
         min: 0,
         max: 1440,

@@ -28,7 +28,7 @@ class EmailprojectController extends Controller
         $em = $this->getDoctrine()->getManager();
         $loggedInUser = $this->getUser();
         $username = $loggedInUser->getUsername();
-        
+
         //$uploader = $this->get('app.uploader');
         //return $uploader->add(2,3);
         //$emailprojects = $em->getRepository('AppBundle:Emailproject')->findAll();
@@ -48,8 +48,8 @@ class EmailprojectController extends Controller
         $d = new \DateTime();
         $emailproject = new Emailproject($request->get('body'),$request->get('title'), $d);
         $loggedInUser = $this->getUser();
-      
- 
+
+
         $emailproject
           ->setUsername($loggedInUser->getUsername())
           ->setEmail($loggedInUser->getEmail())
@@ -57,8 +57,8 @@ class EmailprojectController extends Controller
 
         $form = $this->createForm('AppBundle\Form\EmailprojectType', $emailproject);
         $form->handleRequest($request);
-      
-      
+
+
 
        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -67,7 +67,7 @@ class EmailprojectController extends Controller
 
             return $this->redirectToRoute('emailproject_show', array('id' => $emailproject->getId()));
         }
-       
+
         return $this->render('emailproject/new.html.twig', array(
             'emailproject' => $emailproject,
             'form' => $form->createView(),
@@ -118,39 +118,39 @@ class EmailprojectController extends Controller
         $modules = json_decode($json_file,true);
         $moduleNames = array_keys($modules['templates']);
 
-        
+
         return $this->render('emailproject/build.html', array(
             'emailproject' => $emailproject,
             'moduleNames' => $moduleNames,
         ));
-    }  
+    }
     public function ajaxAction(Request $request)
     {
       $loggedInUser = $this->getUser();
       $company = $loggedInUser->getCompany();
 
       $options = $request->request->get('options');
-      
+
       switch($options['flag']){
         case "sdta-custom-insertSignature":
           $name=$options['name'];
 
-          if($options['oddEven']=="true"){	
+          if($options['oddEven']=="true"){
             return $this->render('company/'.$company.'/templates/signatures.'.$name.'.html');
-            
+
           }else{
             return $this->render('company/'.$company.'/templates/signatures.row.html',
-              array('name' => $name)                 
+              array('name' => $name)
             );
-            
+
           }
           break;
 
         case "dropModule":
           $module = $options['module'];
-          return $this->render('company/'.$company.'/templates/'.$module.'.lyt.php', 
-            array('module' => $module)         
-          ); 
+          return $this->render('company/'.$company.'/templates/'.$module.'.lyt.php',
+            array('module' => $module)
+          );
           break;
         case "saveProject":
           $html = $options['html'];
@@ -163,7 +163,7 @@ class EmailprojectController extends Controller
           $em->flush($emailproject);
           return new Response();
           break;
-        case "events-build": 
+        case "events-build":
           $module = $options['module'];
           $route = $options['route'];
           return $this->render('company/'.$company.'/templates/'.$module.'.php',array('route'=>'/emailproject/make_event_layout'));
@@ -171,46 +171,50 @@ class EmailprojectController extends Controller
         case "syncToExacttarget":
         $html = $options['html'];
         $etID = $options['etID'];
-        break;				
-        default:break;	
-      }      
-      
-      
-     
+        break;
+        default:break;
+      }
 
+
+
+
+    }
+    public function get_htmlAction(Request $request){
+      $options = $request->request->get('options');
+      return $this->render($options['path']);
     }
     public function make_event_layoutAction(Request $request)
     {
       $loggedInUser = $this->getUser();
-      $company = $loggedInUser->getCompany(); 
+      $company = $loggedInUser->getCompany();
       $options = $request->request->get('options');
       //$params = array();
       parse_str($options,$params);
-      
+
       $titles = $params["title"];
       $months = $params["month"];
       $dates = $params["date"];
       $urls = $params["dest_url"];
       $ad_contents = $params["ad_content"];
-      
+
       $rows = [];
-      
+
       foreach($titles as $index => $title){
         //next just need to see if title is empty, if so move on
         if($title == '') break;
         $x = new \stdClass();
-        
+
         $x->title = $title;
         $x->month = $months[$index];
         $x->eventdate = $dates[$index];
         $x->url = $urls[$index];
         $x->adcontent = $ad_contents[$index];
-        
+
         $rows[]=$x;
-        
+
       }
-   
-      
+
+
       return $this->render('company/'.$company.'/templates/events.lyt.php',array(
           'module' => 'events',
           'rows'=> $rows )
@@ -222,13 +226,13 @@ class EmailprojectController extends Controller
       $loggedInUser = $this->getUser();
       $company = $loggedInUser->getCompany();
       $options = $request->request->get('options');
-      
+
       if(!empty($options['module'])){
         $module = $options['module'];
         $flag = $options['flag'];
         $route = $options['route'];
         $listItems = (!empty($options['listItems'])) ? $options['listItems'] : "empty" ;
-        return $this->render('company/'.$company.'/templates/'.$module.'.php',array(   
+        return $this->render('company/'.$company.'/templates/'.$module.'.php',array(
           'module' => $module,
           'action'=> $flag,
           'route'=> $route,
@@ -237,30 +241,30 @@ class EmailprojectController extends Controller
       }else{
 
       parse_str($options,$params);
-      
+
       $titles = $params["title"];
       $urls = $params["dest_url"];
-      
+
       $rows = [];
-      
+
       foreach($titles as $index => $title){
         //next just need to see if title is empty, if so move on
         if($title == '') break;
         $x = new \stdClass();
-        
+
         $x->title = $title;
         $x->url = $urls[$index];
-        
+
         $rows[]=$x;
-        
+
       }
-    
-      
+
+
       return $this->render('company/'.$company.'/templates/paragraph.lyt.php',array(
           'module' => 'simple-list',
           'rows'=> $rows ));
       }
-    }  
+    }
     /**
      * Deletes a emailproject entity.
      *
@@ -278,24 +282,24 @@ class EmailprojectController extends Controller
 
         return $this->redirectToRoute('emailproject_index');
     }
-  
+
     public function deleteMultipleAction(Request $request)
-    {  
+    {
       $inputs = $request->get('delete');
       $em = $this->getDoctrine()->getManager();
-      
+
       foreach($inputs as $projectID){
         $emailproject = $em->getRepository('AppBundle:Emailproject')->find($projectID);
         $em->remove($emailproject);
-        $em->flush($emailproject);        
-        
+        $em->flush($emailproject);
+
       }
 
-        return $this->redirectToRoute('emailproject_index');      
- 
+        return $this->redirectToRoute('emailproject_index');
+
   }
-    
-  
+
+
 
     /**
      * Creates a form to delete a emailproject entity.
