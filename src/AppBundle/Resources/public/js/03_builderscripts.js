@@ -100,10 +100,11 @@ insertDroppedModule=function(html,module){
 	if($(".empty")[0]){
 			$('#container').html(html);
 		}else{
-			$(".droppedHere").after(html);
+			$(".droppedHere").replaceWith(html);
+			//$(".droppedHere").after(html);
 		}
-		$(".dropzone").remove();
-		$(".droppedHere").removeClass("droppedHere");
+		//$(".dropzone, .ui-droppable").remove();
+		//$(".droppedHere").removeClass("droppedHere");
 		deactivate();
 		//$('.ui-droppable').droppable("destroy");
 }
@@ -149,9 +150,7 @@ function doDraggable() {
 							flag:"dropModule",
 							module:ui.draggable.data("module")
 						};
-
 						makeAjaxCall(propsObject,"/emailproject/ajax",insertDroppedModule);
-
     				doDraggable();
 
     			}
