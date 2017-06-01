@@ -2,9 +2,9 @@
   position: absolute;
   background: #777;
   top: 0;
-  width: 130px;
+  width: 220px;
   padding: 10px;
-  left: -150px;
+  left: -240px;
   opacity: .2;
   transition: all .7s ease-out;
 }
