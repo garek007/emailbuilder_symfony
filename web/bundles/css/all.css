@@ -624,9 +624,9 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 .module_controls {
   position: absolute;
   background: #777;
-  width: 80px;
-  height: 30px;
   top: 0;
+  width: 130px;
+  padding: 10px;
   left: -150px;
   opacity: .2;
   transition: all .7s ease-out;
@@ -634,7 +634,6 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 
 .module_controls:hover {
   opacity: 1.0;
-  width: 300px;
   transition: all .7s ease-out;
 }
 
@@ -652,6 +651,7 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
   opacity: 1.0;
   margin-right: 10px;
   color: #fff;
+  margin-bottom: 10px;
 }
 
 .blockme .event .fa {
@@ -750,7 +750,7 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 }
 
 .fa-ellipsis-v, .drag {
-  right: 0px;
+  right: -15px;
   color: #fff;
   position: absolute;
   background: #000;
@@ -758,38 +758,40 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
   border-radius: 0 4px 4px 0;
   cursor: move;
   margin: 0;
+  top: 30px;
 }
 
-.ltblue,
-.orange,
-.white {
-  position: absolute;
-  top: 4px;
+.controls-group {
+  float: left;
+  clear: both;
+}
+
+.change-background {
   width: 20px;
-  right: 30px;
   height: 20px;
-  margin-bottom: 5px;
+  margin-right: 5px;
   cursor: pointer;
   border: 1px solid #aaa;
   background: #fddea6;
+  float: right;
 }
 
 .ltblue {
-  right: 50px;
   background: #dbe7ef;
 }
 
 .white {
-  right: 70px;
   background: #fff;
 }
 
 .remove {
-  left: -15px;
+  right: -20px;
+  position: absolute;
   background: black;
   color: #fff;
-  padding: 7px 8px;
+  padding: 3px 4px;
   border-radius: 50%;
+  top: -9px;
 }
 
 .link.left {

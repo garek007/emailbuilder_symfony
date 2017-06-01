@@ -181,7 +181,6 @@ function doDraggable() {
 									ui.draggable.find('.nopad').css({'padding-left':'15px','padding-right':'0'}).addClass('padLeft');
 								}
 
-
                   var $html = $(this).html();
                   $(this).empty();
                   //ui.draggable.detach().appendTo($(this)).removeAttr('style');
@@ -215,17 +214,12 @@ $(document).ready(function() {
 /////LOOKS LIKE IT CHECKS TO SEE IF THE CONTAINER HAS THE NEW PROJECT CLASS
 ////// THEN DOES SOME AJAXY STUFFY, PROBABLY NOT A GOOD WAY TO DO THIS, SHOULD HANDLE IN INDEX.PHP	///////////////
 	if($container.hasClass("new_project")){
-
 		var $tmp = $container.data("template");
 		$.get("templates/"+$tmp+".html", function(data) {
-
-					$container.append(data);
-					$container.removeClass("new_project");
-					$(".senddate").text(fullMonthName + " " + nextFriday + ", " + year);
-
-
+			$container.append(data);
+			$container.removeClass("new_project");
+			$(".senddate").text(fullMonthName + " " + nextFriday + ", " + year);
 		});
-
 	}
 ////////////////////////////////////////////////////////////////////////
 		$("#project_list").tablesorter();
@@ -255,14 +249,13 @@ $(document).ready(function() {
 
 
 	  $('#clearContainer').click(function() {
-	      if(window.confirm("Are you sure?")){
-
-	      $('#container').html("<span class=\"empty\"></span>");
-	      }
+      if(window.confirm("Are you sure?")){
+      	$('#container').html("<span class=\"empty\"></span>");
+      }
 	  });
 	  $('body').on('click', '.grabcode .ui-icon-closethick, .savecode', function() {
-	      $('.wrapped').removeClass("wrapped").find('.contentarea').unwrap();
-	      $('.ui-dialog').removeClass('grabcode');
+      $('.wrapped').removeClass("wrapped").find('.contentarea').unwrap();
+      $('.ui-dialog').removeClass('grabcode');
 	  });
 
 	 $('body').on('click', '.savecode', function(event) {
@@ -271,96 +264,82 @@ $(document).ready(function() {
 		 closeLoader();
 	 });
 
+	$("body").on("click","#grabAllCode, .grab-module-code, .edit-module-code, #syncToET, #saveProject",function() {
+		if($("#container").find(".unedited").length){
+	    if(!window.confirm("Whoa, it looks like you have some unfilled content areas")){
+	      return;
+	    }
+		}
+		$(".wrapped").removeClass("wrapped");
+		var theCode = '';
+		var id = $(this).attr("id");
+	  var action = $(this).data("action");
+	  console.log(action);
 
-    $("body").on("click","#grabAllCode, .grab-module-code, .edit-module-code, #syncToET, #saveProject",function() {
-			if($("#container").find(".unedited").length){
-        if(!window.confirm("Whoa, it looks like you have some unfilled content areas")){
-          return;
-        }
-			}
-			$(".wrapped").removeClass("wrapped");
-			var theCode = '';
-			var id = $(this).attr("id");
-      var action = $(this).data("action");
-      console.log(action);
+		switch(action){
+			case "syncToET":
+				$('.contentarea_container').each(function() {
+	        theCode += $(this).find('.contentarea').wrap('<p/>').parent().html();
+	    	});
 
-			switch(action){
-				case "syncToET":
-					$('.contentarea_container').each(function() {
-            theCode += $(this).find('.contentarea').wrap('<p/>').parent().html();
-        	});
-
-					var propsObject = {
-						flag:"syncToExacttarget",
-						html:theCode,
-						etID:$("#exacttarget_id").val()
-					};
-					makeAjaxCall(propsObject,"/emailproject/ajax",function(data){
-						console.log(data);//need to make this update a DIV onscreen
-						return;
-					});
-					break;
-				case "grabAllCode":
-					$('.contentarea_container').each(function() {
-							$(this).addClass("wrapped");
-							theCode += $(this).find('.contentarea').wrap('<p/>').parent().html();
-					});
-					break;
-				case "saveProject":
-					var saveObject = {
-						flag:"saveProject",
-						html : $('#container').clone().find('.draggable').removeClass('ui-draggable-handle ui-draggable').end().html(),
-						projectNum : getProjectID(),
-						tag_4_ga: $("#tag4ga").is(":checked"),
-						template: $("#template").val(),
-						utm_source: $('#utm_source').val(),
-						utm_campaign: $('#utm_campaign').val(),
-						utm_medium: $('#utm_medium').val()
-					};
-					makeAjaxCall(saveObject,"/emailproject/ajax",function(data){
-            $('.filled').each().unwrap();
-            $(".saved").fadeIn().delay(3000).fadeOut();
-					});
-          break;
-				default:
-					$(this).closest(".contentarea_container").addClass("wrapped");
-					theCode = $(this).closest(".contentarea_container").find('.contentarea').wrap('<p/>').parent().html();
-					break;
-			}
-      if(action=="grabModuleCode" || action == "grabAllCode"){
-        codePop(theCode,false);
-      }else if(action=="editModuleCode"){
-        $(".wrapped").find(".contentarea").addClass("replaceMe");
-        codePop(theCode,true);
-      }
-    });
+				var propsObject = {
+					flag:"syncToExacttarget",
+					html:theCode,
+					etID:$("#exacttarget_id").val()
+				};
+				makeAjaxCall(propsObject,"/emailproject/ajax",function(data){
+					console.log(data);//need to make this update a DIV onscreen
+					return;
+				});
+				break;
+			case "grabAllCode":
+				$('.contentarea_container').each(function() {
+						$(this).addClass("wrapped");
+						theCode += $(this).find('.contentarea').wrap('<p/>').parent().html();
+				});
+				break;
+			case "saveProject":
+				var saveObject = {
+					flag:"saveProject",
+					html : $('#container').clone().find('.draggable').removeClass('ui-draggable-handle ui-draggable').end().html(),
+					projectNum : getProjectID(),
+					tag_4_ga: $("#tag4ga").is(":checked"),
+					template: $("#template").val(),
+					utm_source: $('#utm_source').val(),
+					utm_campaign: $('#utm_campaign').val(),
+					utm_medium: $('#utm_medium').val()
+				};
+				makeAjaxCall(saveObject,"/emailproject/ajax",function(data){
+	        $('.filled').each().unwrap();
+	        $(".saved").fadeIn().delay(3000).fadeOut();
+				});
+	      break;
+			default:
+				$(this).closest(".contentarea_container").addClass("wrapped");
+				theCode = $(this).closest(".contentarea_container").find('.contentarea').wrap('<p/>').parent().html();
+				break;
+		}
+	  if(action=="grabModuleCode" || action == "grabAllCode"){
+	    codePop(theCode,false);
+	  }else if(action=="editModuleCode"){
+	    $(".wrapped").find(".contentarea").addClass("replaceMe");
+	    codePop(theCode,true);
+	  }
+	});
   //$('#saveproject').click(function() {   //used to have save functions here, merged with above });
 
 //Module control functions start
     $("body").on("click", ".remove", function(e) {
-        e.preventDefault();
-        $(this).closest(".contentarea_container").remove();
-        if($("#container").find(".contentarea_container").length < 1){
-          $("#container").html("<span class=\"empty\"></span>");
-        }
-    });
-
-    $('body').on('click', '.drag', function(e) {
-        //if ($(this).closest('.contentarea_container').hasClass('activated')) {
-          //  $('.activated').removeClass('activated');
-        //} else {
-            deactivate();
-            $(this).closest('.contentarea_container').addClass('activated');
-            var $bottomPad = $('.activated').find('.fullpad').css('padding-bottom');
-            $bottomPad = $bottomPad.replace(/\D/g, '');
-            $('#bottom_padding_slider').slider('value', $bottomPad);
-            $('#bottom_padding').find('.value').text($bottomPad);
-
-            var $topPad = $('.activated').find('.fullpad').css('padding-top');
-            $topPad = $topPad.replace(/\D/g, '');
-            $('#top_padding_slider').slider('value', $bottomPad);
-            $('#top_padding').find('.value').text($bottomPad);
-        //}
+      e.preventDefault();
+			var $me = $(this);
+			if($me.hasClass("self")){
+				$me.parent().remove();
+			}else{
+				$me.closest(".contentarea_container").remove();
+				if($("#container").find(".contentarea_container").length < 1){
+					$("#container").html("<span class=\"empty\"></span>");
+				}
+			}
     });
 
     $('#container').sortable({
@@ -391,8 +370,6 @@ $(document).ready(function() {
 			$me.siblings(".toggle_sponsored").remove();
 		});
 
-
-
 		$(".fa-calendar").click(function() {
        $(".eventDatepicker").show();
     });
@@ -400,22 +377,20 @@ $(document).ready(function() {
 
 //Control panel functions start
     $('#minimize_control_panel').click(function() {
-        var $cPanel = $(this).parent();
-        if ($cPanel.hasClass('open')) {
-            $cPanel.removeClass('open').addClass('minimized');
-            $(this).find('.fa').removeClass('fa-chevron-down').addClass('fa-chevron-up');
-        } else {
-            $cPanel.removeClass('minimized').addClass('open');
-            $(this).find('.fa').removeClass('fa-chevron-up').addClass('fa-chevron-down');
-        }
-
+      var $cPanel = $(this).parent();
+      if ($cPanel.hasClass('open')) {
+        $cPanel.removeClass('open').addClass('minimized');
+        $(this).find('.fa').removeClass('fa-chevron-down').addClass('fa-chevron-up');
+      } else {
+        $cPanel.removeClass('minimized').addClass('open');
+        $(this).find('.fa').removeClass('fa-chevron-up').addClass('fa-chevron-down');
+      }
     });
-
 
 		$('body').on('click', '.fa-sliders', function(e) {
 			var $dad = $(this).parent();
 			makeAjaxCall({path:"emailproject/sliders.html"},"/emailproject/get_html",function(data){
-				$dad.prepend("<div style=\"display:none;\" class=\"control-overlay\">"+data+"</div>");
+				$dad.prepend(data);
 				$(".control-overlay").fadeIn();
 
 				$(".padding-slider").slider({
