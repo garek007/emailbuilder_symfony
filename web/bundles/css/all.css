@@ -625,9 +625,9 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
   position: absolute;
   background: #777;
   top: 0;
-  width: 130px;
+  width: 280px;
   padding: 10px;
-  left: -150px;
+  left: -300px;
   opacity: .2;
   transition: all .7s ease-out;
 }
@@ -759,11 +759,6 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
   cursor: move;
   margin: 0;
   top: 30px;
-}
-
-.controls-group {
-  float: left;
-  clear: both;
 }
 
 .change-background {
