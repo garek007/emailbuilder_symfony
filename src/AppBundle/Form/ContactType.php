@@ -1,5 +1,4 @@
 <?php
-// your-path-to-types/ContactType.php
 
 namespace AppBundle\Form;
 

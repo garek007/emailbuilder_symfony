@@ -54,8 +54,6 @@ class DefaultController extends Controller
 
     private function sendEmail($data){
 	
-			
-			
         $myappContactMail = 'stan_alach@hotmail.com';
         $myappContactPassword = 'yourmailpassword';
         
